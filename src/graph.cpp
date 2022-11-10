@@ -1,18 +1,23 @@
 #include "graph.h"
+#include "utilities.h"
 
 using std::pair;
 using std::string;
 using std::set;
 using std::vector;
+using std::ifstream;
 
 Graph::Graph() {
     // code here
 
 }
 
-Graph::Graph(std::string filename) {
-    // code here
-
+Graph::Graph(string filename) {
+    ifstream ifs{filename};
+    for (string line; getline(ifs, line); line = "") {
+        vector<string> vec = utilities::GetSubstrs(line, ',');
+        data_.push_back(vec);
+    }
 }
 
 vector<Graph::Node> Graph::DijkstraSP(Graph G, Node s) {
