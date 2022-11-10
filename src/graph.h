@@ -22,11 +22,11 @@ class Graph {
 
     Graph();
     Graph(string filename);
-    vector<Node> DijkstraSP(Graph G, Node s);
-    int calculateDistance(Node one, Node two);
+    vector<Node*> DijkstraSP(Graph G, Node* s);
+    double calculateDistance(Node* one, Node* two);
 
     private:
     vector<vector<string>> data_;
-    vector<pair<Node,pair<Node,double>>> edgeList;
-    set<Node> vertices;
+    vector<pair<Node*, pair<Node*, double>>> edgeList;
+    set<Node*> vertices;
 };
