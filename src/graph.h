@@ -26,7 +26,7 @@ class Graph {
     int calculateDistance(Node one, Node two);
 
     private:
-    vector<string> data_;
+    vector<vector<string>> data_;
     vector<pair<Node,pair<Node,double>>> edgeList;
     set<Node> vertices;
 };
