@@ -14,6 +14,9 @@ using std::vector;
 
 class Graph {
     public: 
+    /**
+     * Node struct to represent each incident on the graph
+    */
     struct Node {
         int incidentID;
         int totalDead;
@@ -21,8 +24,19 @@ class Graph {
         pair<double, double> coordinates; 
     };
 
-    Graph();
+    /**
+     * Default constructor
+    */
+    Graph() = default;
+
+    /**
+     * Parametrized constructor that takes in a .csv file where each column
+     * represents incidentID, totDeadMissing, totalMigrants, xCoord, and yCoord
+     * 
+     * @param filename .csv file of incidents
+    */
     Graph(string filename);
+
     vector<Node*> DijkstraSP(Graph G, Node* s);
     double calculateDistance(Node* one, Node* two);
 

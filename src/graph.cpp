@@ -7,11 +7,6 @@ using std::set;
 using std::vector;
 using std::ifstream;
 
-Graph::Graph() {
-    // code here
-
-}
-
 Graph::Graph(string filename) {
     ifstream ifs{filename};
     for (string line; getline(ifs, line); line = "") {
