@@ -5,6 +5,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <fstream>
 
 using std::pair;
 using std::string;
