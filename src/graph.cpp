@@ -22,7 +22,8 @@ Graph::Graph(string filename) {
 
 vector<Graph::Node*> Graph::DijkstraSP(Graph G, Node* s) {
     // code here
-
+    vector<Node*> v;
+    return v;
 }
 
 double Graph::calculateDistance(Node* one, Node* two){
