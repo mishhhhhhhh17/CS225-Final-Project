@@ -27,6 +27,10 @@ Graph::Graph(string filename) {
         toInsert->coordinates = coor;
         vertices.insert(toInsert);
     }
+
+    for (auto v : vertices) { // populating edgeList
+        
+    }
 }
 
 vector<Graph::Node*> Graph::DijkstraSP(Graph G, Node* s) {
