@@ -6,11 +6,13 @@
 #include <utility>
 #include <vector>
 #include <fstream>
+#include <map>
 
 using std::pair;
 using std::string;
 using std::set;
 using std::vector;
+using std::map;
 
 class Graph {
     public: 
@@ -42,6 +44,6 @@ class Graph {
 
     private:
     vector<vector<string>> data_;
-    vector<pair<Node*, pair<Node*, double>>> edgeList;
+    map<Node*, vector<pair<Node*, double>>> edgeList;
     set<Node*> vertices;
 };
