@@ -46,8 +46,6 @@ vector<Graph::Node*> Graph::DijkstraSP(Graph G, Node* s) {
 }
 
 double Graph::calculateDistance(Node* one, Node* two){
-    double ;
-
     double distance = 0;
     double xValueDiff = (one->coordinates.first - two->coordinates.first) * (one->coordinates.first - two->coordinates.first);
     double yValueDiff = (one->coordinates.second - two->coordinates.second) * (one->coordinates.second - two->coordinates.second);
