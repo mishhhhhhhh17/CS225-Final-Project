@@ -3,6 +3,8 @@
 
 using std::pair;
 using std::string;
+using std::stod;
+using std::stoi;
 using std::set;
 using std::vector;
 using std::ifstream;
@@ -16,13 +18,13 @@ Graph::Graph(string filename) {
 
     for(unsigned int i = 1; i < data_.size(); i++) {
         Node* toInsert = new Node();
-        toInsert.incidentID = data_[i][0];
-        toInsert.totalDead = data_[i][1];
-        toInsert.totalMigrants = data_[i][2];
+        toInsert->incidentID = stoi(data_[i][0]);
+        toInsert->totalDead = stoi(data_[i][1]);
+        toInsert->totalMigrants = stoi(data_[i][2]);
         pair<double, double> coor;
-        coor.first = data_[i][3];
-        coor.second = data_[i][4];
-        toInsert.coordinates = coor;
+        coor.first = stod(data_[i][3]);
+        coor.second = stod(data_[i][4]);
+        toInsert->coordinates = coor;
         vertices.insert(toInsert);
     }
 }
