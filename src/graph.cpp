@@ -95,24 +95,24 @@ void Graph::dijkstra(Node* node) {
 
     while (!pq.empty()) {
         
-        Node* u = pq.top().second;
+        Node* current = pq.top().second;
         pq.pop();
  
         std::vector<pair<Node*, double>>::iterator i;
-        for (i = edgeList_[u].begin(); i != edgeList_[u].end(); ++i) {
+        for (i = edgeList_[current].begin(); i != edgeList_[current].end(); ++i) {
             // Get vertex label and weight of current
             // adjacent of u.
-            Node* v = (*i).first;
+            Node* next_vert = (*i).first;
             double weight = (*i).second;
  
             // If there is shorted path to v through u.
-            if (dist[v] > dist[u] + weight) {
+            if (dist[next_vert] > dist[next_vert] + weight) {
                 // Updating distance of v
-                dist[v] = dist[u] + weight;
-                pq.push({dist[v], v});
+                dist[next_vert] = dist[current] + weight;
+                pq.push({dist[next_vert], next_vert});
                 
                 // add vertex to path from source to final node
-                short_paths_[v].push_back(v);
+                short_paths_[next_vert].push_back(next_vert);
             }
          }
     }
