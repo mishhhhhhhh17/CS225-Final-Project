@@ -25,6 +25,7 @@ class Graph {
         string incidentID;
         int totalLoss;
         int totalMigrants;
+        // latitude, longitude
         pair<double, double> coordinates; 
     };
 
@@ -86,6 +87,10 @@ class Graph {
      * distance = R ⋅ c
      * 
      * @cite https://www.movable-type.co.uk/scripts/latlong.html
+     * 
+     * @param one first node
+     * @param two second node
+     * @return distance between one and two in kilometers
     */
     double calculateDistance(Node* one, Node* two);
 

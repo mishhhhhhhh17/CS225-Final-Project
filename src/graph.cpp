@@ -1,7 +1,12 @@
 #include "graph.h"
 #include "utilities.h"
 
+using std::atan2;
+using std::cos;
 using std::pair;
+using std::pow;
+using std::sin;
+using std::sqrt;
 using std::string;
 using std::stod;
 using std::stoi;
@@ -23,8 +28,9 @@ Graph::Graph(string filename) {
         toInsert->totalLoss = stoi(data_[i][1]);
         toInsert->totalMigrants = stoi(data_[i][2]);
         pair<double, double> coor;
-        coor.first = stod(data_[i][3]);
-        coor.second = stod(data_[i][4]);
+        // degrees to radians: degrees ⋅ pi / 180
+        coor.first = stod(data_[i][3]) * M_PI / 180.0;
+        coor.second = stod(data_[i][4]) * M_PI / 180.0;
         toInsert->coordinates = coor;
         if (i == 1) lowest == toInsert;
         if (calculateRisk(toInsert) < calculateRisk(lowest)) lowest = toInsert;
@@ -48,12 +54,21 @@ vector<Graph::Node*> Graph::getShortestPath(Node* node) {
 
 double Graph::calculateRisk(Node* node) { return node->totalLoss / node->totalMigrants; }
 
+/**
+ * φ = latitude
+ * λ = longitude
+ * R = Earth's radius = 6,371km
+ * 
+ * Haversine Formula:
+ * a = sin²(Δφ/2) + cos(φ1) ⋅ cos(φ2) ⋅ sin²(Δλ/2)
+ * c = 2 ⋅ atan2( √a, √(1−a) )
+ * distance = R ⋅ c
+*/
 double Graph::calculateDistance(Node* one, Node* two){
-    double distance = 0;
-    double xValueDiff = (one->coordinates.first - two->coordinates.first) * (one->coordinates.first - two->coordinates.first);
-    double yValueDiff = (one->coordinates.second - two->coordinates.second) * (one->coordinates.second - two->coordinates.second);
-    distance = sqrt(xValueDiff+yValueDiff);
-    return distance;
+    double a = pow((two->coordinates.first - one->coordinates.first)/2.0, 2.0) + cos(one->coordinates.first)
+                * cos(two->coordinates.first) * pow((two->coordinates.second - one->coordinates.second)/2.0, 2.0);
+    double c = 2 * atan2(sqrt(a), sqrt(1-a));
+    return 6371 * c;
 }
 
 void Graph::dijkstra(Node* node) {
