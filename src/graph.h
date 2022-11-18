@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <queue>
 #include <set>
 #include <string>
 #include <utility>
@@ -9,6 +10,7 @@
 #include <map>
 
 using std::pair;
+using std::priority_queue;
 using std::string;
 using std::set;
 using std::vector;
@@ -20,8 +22,8 @@ class Graph {
      * Node struct to represent each incident on the graph
     */
     struct Node {
-        int incidentID;
-        int totalDead;
+        string incidentID;
+        int totalLoss;
         int totalMigrants;
         pair<double, double> coordinates; 
     };
@@ -38,20 +40,47 @@ class Graph {
      * @param filename .csv file of incidents
     */
     Graph(string filename);
+    
+    /**
+     * Returns shortest path from root of spanning tree to @param node
+     * Dijkstras
+    */
+    vector<Node*> getShortestPath(Node* node);
+    
 
-    vector<Node*> DijkstraSP(Graph G, Node* s);
+    private:
+    vector<vector<string>> data_;
+
+    map<Node*, vector<pair<Node*, double>>> edgeList_;
+
+    // shortest paths
+    map<Node*, vector<Node*>> short_paths_;
+
+    // set of all vertices in the Graph
+    set<Node*> vertices_;
+
+    /*
+    Node with the lowest fraction of lost migrants.
+    Initialized in the Graph constructor.
+    */
+    Node* lowest_risk_;
 
     /**
-     * Finding the distance between two coordinates in radians using the haversine formula
+     * Traverses spanning tree to get the Shortest Path
+    */
+    vector<Node*> getShortestPath(Node* node);
+
+    /**
+     * Finding the distance between two coordinates in radians using the haversine formula @endparblock
      * 
-     * degrees to radians: degrees * pi / 180
+     * degrees to radians: degrees ⋅ pi / 180
      * 
      * φ = latitude
      * λ = longitude
      * R = Earth's radius = 6,371km
      * 
      * Haversine Formula:
-     * a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
+     * a = sin²(Δφ/2) + cos(φ1) ⋅ cos(φ2) ⋅ sin²(Δλ/2)
      * c = 2 ⋅ atan2( √a, √(1−a) )
      * distance = R ⋅ c
      * 
@@ -59,8 +88,10 @@ class Graph {
     */
     double calculateDistance(Node* one, Node* two);
 
-    private:
-    vector<vector<string>> data_;
-    map<Node*, vector<pair<Node*, double>>> edgeList;
-    set<Node*> vertices;
+    /*
+    Returns the fraction of lost migrants out of the total number.
+    */
+    double calculateRisk(Node* node);
+
+    void dijkstra(Node* node);
 };
