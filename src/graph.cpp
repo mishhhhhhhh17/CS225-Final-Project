@@ -14,6 +14,22 @@ using std::set;
 using std::vector;
 using std::ifstream;
 
+Graph::~Graph() {
+    for (auto v: vertices_) {
+        delete v;
+    }
+}
+
+Graph::Graph(const Graph& other) {
+    // @todo
+}
+    
+Graph& Graph::operator=(const Graph& other) {
+    // @todo
+    if (this == &other) return *this;
+    return *this;
+}
+
 Graph::Graph(string filename) {
     ifstream ifs{filename};
     for (string line; getline(ifs, line); line = "") {
@@ -40,9 +56,7 @@ Graph::Graph(string filename) {
     for (auto v : vertices_) { // populating edgeList
         vector<pair<Node*, double>> vect;
         for (auto e : vertices_) {
-            if (calculateDistance(v, e) != 0) {
-                vect.push_back({e, calculateDistance(v, e)});
-            }
+            if (calculateDistance(v, e) != 0) vect.push_back({e, calculateDistance(v, e)});
         }
         edgeList_[v] = vect;
     }

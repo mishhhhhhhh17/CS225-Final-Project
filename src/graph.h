@@ -35,6 +35,21 @@ class Graph {
     Graph() = default;
 
     /**
+     * Destructor
+    */
+    ~Graph();
+
+    /**
+     * Copy constructor
+    */
+    Graph(const Graph& other);
+    
+    /**
+     * Copy assignment operator
+    */
+    Graph& operator=(const Graph& other);
+
+    /**
      * Parametrized constructor that takes in a .csv file where each column
      * represents incidentID, totDeadMissing, totalMigrants, xCoord, and yCoord
      * @todo populate edge list. nodes have edge if within certain distance of each other.
@@ -44,8 +59,8 @@ class Graph {
     Graph(string filename);
     
     /**
-     * Returns shortest path from root of spanning tree to @param node
-     * Dijkstras
+     * Returns shortest path from root of spanning tree to node
+     * @param node Dijkstra's
     */
     vector<Node*> getShortestPath(Node* node);
     
