@@ -15,9 +15,7 @@ using std::vector;
 using std::ifstream;
 
 Graph::~Graph() {
-    for (auto v: vertices_) {
-        delete v;
-    }
+    _destroy();
 }
 
 Graph::Graph(const Graph& other) {
@@ -26,7 +24,10 @@ Graph::Graph(const Graph& other) {
     
 Graph& Graph::operator=(const Graph& other) {
     // @todo
-    if (this == &other) return *this;
+    if (this != &other) {
+        _destroy();
+        _copy(other);
+    }
     return *this;
 }
 
@@ -117,3 +118,21 @@ void Graph::dijkstra(Node* node) {
          }
     }
 }
+
+
+void Graph::_copy(const Graph& other){
+    if(!other.vertices_.empty()) {
+        //begin populating the edge list and vertices.
+
+        //for vertices
+        
+    }
+}
+
+
+void Graph::_destroy(){
+    for (auto v: vertices_) {
+        delete v;
+    }
+}
+

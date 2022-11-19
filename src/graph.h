@@ -63,6 +63,11 @@ class Graph {
      * @param node Dijkstra's
     */
     vector<Node*> getShortestPath(Node* node);
+
+    //to help with operator=
+    void _copy(const Graph& other);
+
+    void _destroy();
     
 
     private:
