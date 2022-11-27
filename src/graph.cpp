@@ -124,8 +124,24 @@ void Graph::_copy(const Graph& other){
     if(!other.vertices_.empty()) {
         //begin populating the edge list and vertices.
 
+    //map<Node*, vector<pair<Node*, double>>> edgeList_;
+
+        for(auto iter = other.edgeList_.begin(); iter!= other.edgeList_.end();iter++) {
+            struct Node* nodeKey = other.edgeList_
+            edgeList_->first = iter->first;
+            edgeList->second = iter->second;
+        }
+
         //for vertices
-        
+        for(unsigned int i = 0; i < other.vertices_.size(); i++) {
+        struct Node* toInsert = new Node();
+        toInsert->incidentID = other.vertices_[i].incidentID;
+        toInsert->totalLoss = other.vertices_[i].totalLoss;
+        toInsert->totalMigrants = other.vertices_[i].totalMigrants;
+        toInsert->coordinates = other.vertices_[i].coordinates;
+        vertices_.insert(toInsert);
+        }
+
     }
 }
 
