@@ -38,6 +38,7 @@ Graph::Graph(string filename) {
         data_.push_back(vec);
     }
 
+
     Node* lowest;
     for(unsigned int i = 1; i < data_.size(); i++) {
         struct Node* toInsert = new Node();
@@ -49,7 +50,7 @@ Graph::Graph(string filename) {
         coor.first = stod(data_[i][3]) * M_PI / 180.0;
         coor.second = stod(data_[i][4]) * M_PI / 180.0;
         toInsert->coordinates = coor;
-        if (i == 1) lowest == toInsert;
+        if (i == 1) lowest = toInsert;
         if (calculateRisk(toInsert) < calculateRisk(lowest)) lowest = toInsert;
         vertices_.insert(toInsert);
     }
@@ -141,7 +142,6 @@ void Graph::_copy(const Graph& other){
         toInsert->coordinates = other.vertices_[i].coordinates;
         vertices_.insert(toInsert);
         }
-
     }
 }
 
@@ -150,5 +150,18 @@ void Graph::_destroy(){
     for (auto v: vertices_) {
         delete v;
     }
+}
+
+// testing functions
+vector<vector<string>> Graph::getData() {
+    return data_;
+}
+
+map<Graph::Node*, vector<pair<Graph::Node*, double>>> Graph::getEdgeList() {
+    return edgeList_;
+}
+
+set<Graph::Node*> Graph::getVertices() {
+    return vertices_;
 }
 
