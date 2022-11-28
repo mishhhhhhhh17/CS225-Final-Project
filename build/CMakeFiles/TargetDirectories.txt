@@ -1,0 +1,11 @@
+/root/cs225/CS225-Final-Project/build/CMakeFiles/test.dir
+/root/cs225/CS225-Final-Project/build/CMakeFiles/main.dir
+/root/cs225/CS225-Final-Project/build/CMakeFiles/edit_cache.dir
+/root/cs225/CS225-Final-Project/build/CMakeFiles/rebuild_cache.dir
+/root/cs225/CS225-Final-Project/build/lib/CMakeFiles/lodepng.dir
+/root/cs225/CS225-Final-Project/build/lib/CMakeFiles/cs225.dir
+/root/cs225/CS225-Final-Project/build/lib/CMakeFiles/edit_cache.dir
+/root/cs225/CS225-Final-Project/build/lib/CMakeFiles/rebuild_cache.dir
+/root/cs225/CS225-Final-Project/build/src/CMakeFiles/src.dir
+/root/cs225/CS225-Final-Project/build/src/CMakeFiles/edit_cache.dir
+/root/cs225/CS225-Final-Project/build/src/CMakeFiles/rebuild_cache.dir
