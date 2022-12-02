@@ -69,10 +69,13 @@ class Graph {
 
     void _destroy();
 
+    std::vector<Node*> findByLoss(double target, double range);
+
     // for testing
     vector<vector<string>> getData();
     map<Node*, vector<pair<Node*, double>>> getEdgeList();
     set<Node*> getVertices();
+    
 
 
     private:
@@ -125,4 +128,5 @@ class Graph {
     double calculateRisk(Node* node);
 
     void dijkstra(Node* node);
+    
 };
