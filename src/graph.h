@@ -68,7 +68,12 @@ class Graph {
     void _copy(const Graph& other);
 
     void _destroy();
-    
+
+    // for testing
+    vector<vector<string>> getData();
+    map<Node*, vector<pair<Node*, double>>> getEdgeList();
+    set<Node*> getVertices();
+
 
     private:
     vector<vector<string>> data_;
@@ -90,7 +95,7 @@ class Graph {
     /**
      * Traverses spanning tree to get the Shortest Path
     */
-    vector<Node*> getShortestPath(Node* node);
+    //vector<Node*> getShortestPath(Node* node);
 
     /**
      * Finding the distance between two coordinates in radians using the haversine formula @endparblock
