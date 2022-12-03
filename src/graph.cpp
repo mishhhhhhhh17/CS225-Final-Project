@@ -13,6 +13,7 @@ using std::stoi;
 using std::set;
 using std::vector;
 using std::ifstream;
+using std::find;
 
 Graph::~Graph() {
     _destroy();
@@ -87,36 +88,35 @@ double Graph::calculateDistance(Node* one, Node* two){
     return 6371 * c;
 }
 
-void Graph::dijkstra(Node* node) {
-    priority_queue<pair<double, Node*>> pq;
+void Graph::prim() {
+    priority_queue<pair<Node*, double>, vector<pair<Node*, double>>, greater<double>> pq; // min heap
  
-    map<Node*, double> dist;
- 
-     pq.push({0, node});
-     dist[node] = 0;
+    map<Node*, double> distance;
+    map<Node*, Node*> predecessor; // second argument of pair is parent
 
-    while (!pq.empty()) {
-        
-        Node* current = pq.top().second;
+    for (auto v : vertices_) {
+        if (v == *vertices_.begin()) distance.insert({v, 0});
+        else distance.insert({v, INT16_MAX}); // "infinity" weights
+        predecessor.insert({v, NULL});
+    }
+
+    for (auto map_pair : distance) { // populating pq
+        pq.push(map_pair);
+    }
+    vector<Node*> visited;
+
+    for (unsigned int i = 0; i < vertices_.size(); i++) {
+        Node* current = pq.top().first;
         pq.pop();
- 
-        std::vector<pair<Node*, double>>::iterator i;
-        for (i = edgeList_[current].begin(); i != edgeList_[current].end(); ++i) {
-            // Get vertex label and weight of current
-            // adjacent of u.
-            Node* next_vert = (*i).first;
-            double weight = (*i).second;
- 
-            // If there is shorted path to v through u.
-            if (dist[next_vert] > dist[next_vert] + weight) {
-                // Updating distance of v
-                dist[next_vert] = dist[current] + weight;
-                pq.push({dist[next_vert], next_vert});
-                
-                // add vertex to path from source to final node
-                short_paths_[next_vert].push_back(next_vert);
+        visited.push_back(current);
+        for (auto i = edgeList_[current].begin(); i != edgeList_[current].end(); i++) {
+            if (!(find(visited.begin(), visited.end(), (*i).first) != visited.end())) { // neighbor not visited yet
+                if (calculateDistance((*i).first, current) < distance[(*i).first]) {
+                    distance[(*i).first] = calculateDistance((*i).first, current);
+                    predecessor[(*i).first] = current;
+                }
             }
-         }
+        }
     }
 }
 
@@ -128,7 +128,7 @@ void Graph::_copy(const Graph& other){
     //map<Node*, vector<pair<Node*, double>>> edgeList_;
 
         for(auto iter = other.edgeList_.begin(); iter!= other.edgeList_.end();iter++) {
-            struct Node* nodeKey = other.edgeList_
+            struct Node* nodeKey = other.edgeList_;
             edgeList_->first = iter->first;
             edgeList->second = iter->second;
         }
@@ -165,7 +165,7 @@ set<Graph::Node*> Graph::getVertices() {
     return vertices_;
 }
 
-std::vector<Node*> findByLoss(double target, double range) {
+std::vector<Graph::Node*> Graph::findByLoss(double target, double range) {
         // to return
         std::vector<Node*> out;
     

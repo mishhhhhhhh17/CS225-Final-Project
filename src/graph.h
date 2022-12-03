@@ -8,9 +8,12 @@
 #include <vector>
 #include <fstream>
 #include <map>
+#include <functional>
+#include <algorithm>
 
 using std::pair;
 using std::priority_queue;
+using std::greater;
 using std::string;
 using std::set;
 using std::vector;
@@ -69,7 +72,7 @@ class Graph {
 
     void _destroy();
 
-    std::vector<Node*> findByLoss(double target, double range);
+    vector<Node*> findByLoss(double target, double range);
 
     // for testing
     vector<vector<string>> getData();
@@ -127,6 +130,6 @@ class Graph {
     */
     double calculateRisk(Node* node);
 
-    void dijkstra(Node* node);
+    void prim();
     
 };
