@@ -1,5 +1,7 @@
 #pragma once
 
+#include "cs225/PNG.h"
+
 #include <cmath>
 #include <queue>
 #include <set>
@@ -73,6 +75,8 @@ class Graph {
     void _destroy();
 
     vector<Node*> findByLoss(double target, double range);
+
+    void plotPointsOnMap(string file, vector<pair<double, double>> points);
 
     // for testing
     vector<vector<string>> getData();
