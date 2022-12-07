@@ -47,9 +47,8 @@ Graph::Graph(string filename) {
         toInsert->totalLoss = stoi(data_[i][1]);
         toInsert->totalMigrants = stoi(data_[i][2]);
         pair<double, double> coor;
-        // degrees to radians: degrees ⋅ pi / 180
-        coor.first = stod(data_[i][3]) * M_PI / 180.0;
-        coor.second = stod(data_[i][4]) * M_PI / 180.0;
+        coor.first = stod(data_[i][3]);
+        coor.second = stod(data_[i][4]);
         toInsert->coordinates = coor;
         if (i == 1) lowest = toInsert;
         if (calculateRisk(toInsert) < calculateRisk(lowest)) lowest = toInsert;
@@ -87,8 +86,9 @@ double Graph::calculateRisk(Node* node) { return node->totalLoss / node->totalMi
  * distance = R ⋅ c
 */
 double Graph::calculateDistance(Node* one, Node* two){
-    double a = pow((two->coordinates.first - one->coordinates.first)/2.0, 2.0) + cos(one->coordinates.first)
-                * cos(two->coordinates.first) * pow((two->coordinates.second - one->coordinates.second)/2.0, 2.0);
+    double a = pow(((two->coordinates.first * M_PI / 180.0) - (one->coordinates.first * M_PI / 180.0))/2.0, 2.0)
+                + cos(one->coordinates.first * M_PI / 180.0) * cos(two->coordinates.first * M_PI / 180.0)
+                * pow(((two->coordinates.second * M_PI / 180.0) - (one->coordinates.second * M_PI) / 180.0)/2.0, 2.0);
     double c = 2 * atan2(sqrt(a), sqrt(1-a));
     return 6371 * c;
 }
