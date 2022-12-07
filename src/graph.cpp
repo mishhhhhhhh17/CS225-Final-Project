@@ -216,9 +216,9 @@ void Graph::plotPointsOnMap(const PNG blank_map, vector<pair<double, double>> po
         for (size_t x = 0; x < 4; x++) {
             for (size_t y = 0; y < 4; y++) {
                 // if the point is in bounds
-                if (point.first - 2 + x >= 0 && point.first - 2 + x < theMap->width() && 
-                    point.second - 2 + y >= 0 && point.second - 2 + y < theMap->height()) {
-                        theMap->getPixel(point.first - 2 + x, point.second - 2 + y) = red;
+                if (latLonToXY(theMap, point).first - 2 + x >= 0 && latLonToXY(theMap, point).first - 2 + x < theMap->width() && 
+                    latLonToXY(theMap, point).second - 2 + y >= 0 && latLonToXY(theMap, point).second - 2 + y < theMap->height()) {
+                        theMap->getPixel(latLonToXY(theMap, point).first - 2 + x, latLonToXY(theMap, point).second - 2 + y) = red;
                     }
             }
         }
