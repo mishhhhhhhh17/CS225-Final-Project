@@ -79,7 +79,7 @@ class Graph {
 
     vector<Node*> findByLoss(double target, double range);
 
-    void plotPointsOnMap(string file, vector<pair<double, double>> points);
+    void plotPointsOnMap(const PNG blank_map, vector<pair<double, double>> points);
 
     // for testing
     vector<vector<string>> getData();
@@ -133,7 +133,7 @@ class Graph {
     double calculateDistance(Node* one, Node* two);
 
     /**
-     * converts latitude, longitude points to x, y points
+     * helper function that converts (latitude, longitude) points to (x, y) points
     */
     pair<unsigned int, unsigned int> latLonToXY(const PNG* image, pair<double, double> coor);
 

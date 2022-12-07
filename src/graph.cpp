@@ -206,8 +206,8 @@ std::vector<Graph::Node*> Graph::findByLoss(double target, double range) {
         return out;
     }
 
-void Graph::plotPointsOnMap(string file, vector<pair<double, double>> points) {
-    PNG theMap; theMap.readFromFile(file);
+void Graph::plotPointsOnMap(const PNG blank_map, vector<pair<double, double>> points) {
+    PNG* theMap = new PNG(blank_map);
     // create color of point
     cs225::HSLAPixel red(0, 1 , 0.5, 1);
     // iterate through points
@@ -216,12 +216,12 @@ void Graph::plotPointsOnMap(string file, vector<pair<double, double>> points) {
         for (size_t x = 0; x < 4; x++) {
             for (size_t y = 0; y < 4; y++) {
                 // if the point is in bounds
-                if (point.first - 2 + x >= 0 && point.first - 2 + x < theMap.width() && 
-                    point.second - 2 + y >= 0 && point.second - 2 + y < theMap.height()) {
-                        theMap.getPixel(point.first - 2 + x, point.second - 2 + y) = red;
+                if (point.first - 2 + x >= 0 && point.first - 2 + x < theMap->width() && 
+                    point.second - 2 + y >= 0 && point.second - 2 + y < theMap->height()) {
+                        theMap->getPixel(point.first - 2 + x, point.second - 2 + y) = red;
                     }
             }
         }
     }
-    theMap.writeToFile("../missing_migrants_map.png");
+    theMap->writeToFile("../missing_migrants_map.png");
 }
