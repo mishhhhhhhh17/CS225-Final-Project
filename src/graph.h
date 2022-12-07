@@ -1,6 +1,7 @@
 #pragma once
 
-#include "cs225/PNG.h"
+#include "../lib/cs225/PNG.h"
+#include "../lib/cs225/HSLAPixel.h"
 
 #include <cmath>
 #include <queue>
@@ -20,6 +21,8 @@ using std::string;
 using std::set;
 using std::vector;
 using std::map;
+
+using namespace cs225;
 
 class Graph {
     public: 

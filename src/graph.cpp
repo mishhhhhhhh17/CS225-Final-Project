@@ -126,21 +126,19 @@ void Graph::_copy(const Graph& other){
         //begin populating the edge list and vertices.
 
     //map<Node*, vector<pair<Node*, double>>> edgeList_;
-
-        for(auto iter = other.edgeList_.begin(); iter!= other.edgeList_.end();iter++) {
-            struct Node* nodeKey = other.edgeList_;
-            edgeList_->first = iter->first;
-            edgeList->second = iter->second;
+    
+        for (auto iter = other.edgeList_.begin(); iter != other.edgeList_.end(); iter++) {
+            edgeList_[iter->first] = iter->second;
         }
 
         //for vertices
-        for(unsigned int i = 0; i < other.vertices_.size(); i++) {
-        struct Node* toInsert = new Node();
-        toInsert->incidentID = other.vertices_[i].incidentID;
-        toInsert->totalLoss = other.vertices_[i].totalLoss;
-        toInsert->totalMigrants = other.vertices_[i].totalMigrants;
-        toInsert->coordinates = other.vertices_[i].coordinates;
-        vertices_.insert(toInsert);
+        for (auto& iter : other.vertices_) {
+            struct Node* toInsert = new Node();
+            toInsert->incidentID = iter->incidentID;
+            toInsert->totalLoss = iter->totalLoss;
+            toInsert->totalMigrants = iter->totalMigrants;
+            toInsert->coordinates = iter->coordinates;
+            vertices_.insert(toInsert);
         }
     }
 }
@@ -204,7 +202,7 @@ std::vector<Graph::Node*> Graph::findByLoss(double target, double range) {
     }
 
 void Graph::plotPointsOnMap(string file, vector<pair<double, double>> points) {
-    PNG map; map.readFromFile(file);
+    PNG theMap; theMap.readFromFile(file);
     // create color of point
     cs225::HSLAPixel red(0, 1 , 0.5, 1);
     // iterate through points
@@ -213,12 +211,12 @@ void Graph::plotPointsOnMap(string file, vector<pair<double, double>> points) {
         for (size_t x = 0; x < 4; x++) {
             for (size_t y = 0; y < 4; y++) {
                 // if the point is in bounds
-                if (point.first - 2 + x >= 0 && point.first - 2 + x < map.width() && 
-                    point.second - 2 + y >= 0 && point.second - 2 + y < map.height()) {
-                        map.getPixel(point.first - 2 + x, point.second - 2 + y) = red;
+                if (point.first - 2 + x >= 0 && point.first - 2 + x < theMap.width() && 
+                    point.second - 2 + y >= 0 && point.second - 2 + y < theMap.height()) {
+                        theMap.getPixel(point.first - 2 + x, point.second - 2 + y) = red;
                     }
             }
         }
     }
-    map.writeToFile("../missing_migrants_map.png");
+    theMap.writeToFile("../missing_migrants_map.png");
 }
