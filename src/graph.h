@@ -132,6 +132,11 @@ class Graph {
     */
     double calculateDistance(Node* one, Node* two);
 
+    /**
+     * converts latitude, longitude points to x, y points
+    */
+    pair<unsigned int, unsigned int> latLonToXY(const PNG* image, pair<double, double> coor);
+
     /*
     Returns the fraction of lost migrants out of the total number.
     */

@@ -69,6 +69,11 @@ vector<Graph::Node*> Graph::getShortestPath(Node* node) {
     return short_paths_[node];
 }
 
+pair<unsigned int, unsigned int> Graph::latLonToXY(const PNG* image, pair<double, double> coor) {
+    unsigned int x = image->width() * (180 + coor.first) / 360;
+    unsigned int y = image->height() * (90 - coor.second) / 180;
+}
+
 double Graph::calculateRisk(Node* node) { return node->totalLoss / node->totalMigrants; }
 
 /**
