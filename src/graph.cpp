@@ -169,42 +169,42 @@ set<Graph::Node*> Graph::getVertices() {
 }
 
 std::vector<Graph::Node*> Graph::findByLoss(double target, double range) {
-        // to return
-        std::vector<Node*> out;
+    // to return
+    std::vector<Node*> out;
     
-        // Mark all the vertices as not visited
-        std::map<Node*, bool> visited;
-        for (auto node : vertices_) visited.emplace(node, false);
+    // Mark all the vertices as not visited
+    std::map<Node*, bool> visited;
+    for (auto node : vertices_) visited.emplace(node, false);
 
-        // Create a queue for BFS
-        std::queue<Node*> q;
+    // Create a queue for BFS
+    std::queue<Node*> q;
     
-        // // Mark the current node as visited and enqueue it
-        Node* current = lowest_risk_;
-        visited[current] = true;
-        q.push(current);
+    // // Mark the current node as visited and enqueue it
+    Node* current = lowest_risk_;
+    visited[current] = true;
+    q.push(current);
     
-        while(!q.empty()) {
-            // Dequeue a vertex from queue
-            current = q.front();
+    while(!q.empty()) {
+        // Dequeue a vertex from queue
+        current = q.front();
 
-            // check if current's risk is within range of target
-            if (abs(target - calculateRisk(current)) <= range) out.push_back(current);
-            // pop
-            q.pop();
+        // check if current's risk is within range of target
+        if (abs(target - calculateRisk(current)) <= range) out.push_back(current);
+        // pop
+        q.pop();
         
-            // Get all adjacent vertices of the dequeued
-            // vertex current. If a adjacent has not been visited,
-            // then mark it visited and enqueue it
-            for (auto adj : edgeList_[current]) {
-                if (!visited[adj.first]) {
-                    visited[adj.first] = true;
-                    q.push(adj.first);
-                }
+        // Get all adjacent vertices of the dequeued
+        // vertex current. If a adjacent has not been visited,
+        // then mark it visited and enqueue it
+        for (auto adj : edgeList_[current]) {
+            if (!visited[adj.first]) {
+                visited[adj.first] = true;
+                q.push(adj.first);
             }
         }
-        return out;
     }
+    return out;
+}
 
 void Graph::plotPointsOnMap(const PNG blank_map, vector<pair<double, double>> points) {
     PNG* theMap = new PNG(blank_map);
