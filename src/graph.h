@@ -72,6 +72,11 @@ class Graph {
     */
     vector<Node*> getShortestPath(Node* node);
 
+    // helper functions for Prim's:
+    // finds the node with minimum distance in a heap
+    Node* findMin(map<Node*, double>& heap);
+    void addEdge(Node* node1, Node* node2, double distance);
+
     //to help with operator=
     void _copy(const Graph& other);
 
@@ -80,6 +85,8 @@ class Graph {
     vector<Node*> findByLoss(double target, double range);
 
     void plotPointsOnMap(const PNG blank_map, vector<pair<double, double>> points);
+
+    Graph prim();
 
     // for testing
     vector<vector<string>> getData();
@@ -104,11 +111,6 @@ class Graph {
     Initialized in the Graph constructor.
     */
     Node* lowest_risk_;
-
-    /**
-     * Traverses spanning tree to get the Shortest Path
-    */
-    //vector<Node*> getShortestPath(Node* node);
 
     /**
      * Finding the distance between two coordinates in radians using the haversine formula @endparblock
@@ -141,7 +143,5 @@ class Graph {
     Returns the fraction of lost migrants out of the total number.
     */
     double calculateRisk(Node* node);
-
-    void prim();
     
 };

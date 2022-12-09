@@ -58,7 +58,7 @@ Graph::Graph(string filename) {
     for (auto v : vertices_) { // populating edgeList
         vector<pair<Node*, double>> vect;
         for (auto e : vertices_) {
-            if (calculateDistance(v, e) != 0) vect.push_back({e, calculateDistance(v, e)});
+            if (calculateDistance(v, e) != 0 && calculateDistance(v, e) < 750) vect.push_back({e, calculateDistance(v, e)});
         }
         edgeList_[v] = vect;
     }
@@ -71,6 +71,7 @@ vector<Graph::Node*> Graph::getShortestPath(Node* node) {
 pair<unsigned int, unsigned int> Graph::latLonToXY(const PNG* image, pair<double, double> coor) {
     unsigned int x = image->width() * (180 + coor.first) / 360;
     unsigned int y = image->height() * (90 - coor.second) / 180;
+    return {x, y};
 }
 
 double Graph::calculateRisk(Node* node) { return node->totalLoss / node->totalMigrants; }
@@ -93,36 +94,54 @@ double Graph::calculateDistance(Node* one, Node* two){
     return 6371 * c;
 }
 
-void Graph::prim() {
-    priority_queue<pair<Node*, double>, vector<pair<Node*, double>>, greater<double>> pq; // min heap
- 
-    map<Node*, double> distance;
-    map<Node*, Node*> predecessor; // second argument of pair is parent
+// helper function for Prim's, finds the node with minimum distance in a heap
+Graph::Node* Graph::findMin(map<Node*, double>& heap) {
+    pair<Node*, double> min_pair = *heap.begin(); // arbitrary
+    for (auto map_pair : heap) {
+        if (map_pair.second < min_pair.second) min_pair = map_pair;
+    }
+    return min_pair.first;
+}
+
+void Graph::addEdge(Node* node1, Node* node2, double distance) {
+    edgeList_[node1].push_back({node2, distance});
+    edgeList_[node2].push_back({node1, distance});
+}
+
+Graph Graph::prim() {
+    map<Node*, double> pq; // fake heap with distance as second argument
+    map<Node*, Node*> predecessor; // <node, parent>
+    vector<Node*> visited; // keeping track of visited nodes to create spanning tree
+    Graph spanning_tree = Graph();
 
     for (auto v : vertices_) {
-        if (v == *vertices_.begin()) distance.insert({v, 0});
-        else distance.insert({v, INT16_MAX}); // "infinity" weights
-        predecessor.insert({v, NULL});
+        if (v == *vertices_.begin()) pq.insert({v, 0}); // distance is 0 for starting node
+        else pq.insert({v, INT16_MAX}); // "infinity" distance for all other nodes
+        predecessor.insert({v, NULL}); // predecessors initialized to null
     }
 
-    for (auto map_pair : distance) { // populating pq
-        pq.push(map_pair);
-    }
-    vector<Node*> visited;
+    while (!pq.empty()) {
+        Node* current = findMin(pq); // node w/ min distance
+        pq.erase(current); // removes the min node from the heap
+        visited.push_back(current); // adds this node to the spanning tree
 
-    for (unsigned int i = 0; i < vertices_.size(); i++) {
-        Node* current = pq.top().first;
-        pq.pop();
-        visited.push_back(current);
-        for (auto i = edgeList_[current].begin(); i != edgeList_[current].end(); i++) {
-            if (!(find(visited.begin(), visited.end(), (*i).first) != visited.end())) { // neighbor not visited yet
-                if (calculateDistance((*i).first, current) < distance[(*i).first]) {
-                    distance[(*i).first] = calculateDistance((*i).first, current);
-                    predecessor[(*i).first] = current;
+        for (auto edge : edgeList_[current]) { // looking through adjacent nodes of current
+            if (!(find(visited.begin(), visited.end(), edge.first) != visited.end())) { // checking if in visited
+                if (calculateDistance(current, edge.first) < pq[edge.first]) { // need to update the weight
+                    auto it = pq.find(edge.first);
+                    if (it != pq.end()) it->second = calculateDistance(current, edge.first); // updating weight in heap
+                    auto itr = predecessor.find(edge.first);
+                    if (itr != predecessor.end()) itr->second = current; // updating predecessor
                 }
             }
         }
     }
+
+    for (auto node : visited) { // populating spanning_tree
+        if (predecessor[node] != NULL) spanning_tree.addEdge(node, predecessor[node], calculateDistance(node, predecessor[node]));
+    }
+    
+    return spanning_tree;
 }
 
 
