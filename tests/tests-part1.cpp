@@ -69,7 +69,7 @@ TEST_CASE("Graph members") {
     }
 
     SECTION("actual data csv") {
-        Graph g("../data/missing_migrants_2022.csv");
+        Graph g("../data/cleaned_dataset.csv");
         set<Graph::Node*> verticies = g.getVertices();
         REQUIRE(verticies.size() == 834);
     }

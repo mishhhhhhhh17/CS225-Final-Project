@@ -139,7 +139,7 @@ class Graph {
     /**
      * helper function that converts (latitude, longitude) points to (x, y) points
     */
-    pair<unsigned int, unsigned int> latLonToXY(const PNG* image, pair<double, double> coor);
+    pair<double, double> latLonToXY(const PNG* image, pair<double, double> coor);
 
     /*
     Returns the fraction of lost migrants out of the total number.

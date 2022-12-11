@@ -68,9 +68,9 @@ vector<Graph::Node*> Graph::getShortestPath(Node* node) {
     return short_paths_[node];
 }
 
-pair<unsigned int, unsigned int> Graph::latLonToXY(const PNG* image, pair<double, double> coor) {
-    unsigned int x = image->width() * (180 + coor.first) / 360;
-    unsigned int y = image->height() * (90 - coor.second) / 180;
+pair<double, double> Graph::latLonToXY(const PNG* image, pair<double, double> coor) {
+    double x = image->width() * (180 + coor.second) / 360;
+    double y = image->height() * (90 - coor.first) / 180;
     return {x, y};
 }
 
@@ -232,6 +232,7 @@ void Graph::plotPointsOnMap(const PNG blank_map) {
     // iterate through points
     for(auto vertex : vertices_) {
         // color a 5x5 area centered on the point
+        std::cout << "(x,y): " << latLonToXY(theMap, vertex->coordinates).first << ", " << latLonToXY(theMap, vertex->coordinates).second << std::endl;
         for (size_t x = 0; x < 4; x++) {
             for (size_t y = 0; y < 4; y++) {
                 // if the point is in bounds
