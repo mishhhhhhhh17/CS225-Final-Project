@@ -74,7 +74,7 @@ pair<double, double> Graph::latLonToXY(const PNG* image, pair<double, double> co
     return {x, y};
 }
 
-double Graph::calculateRisk(Node* node) { return node->totalLoss / node->totalMigrants; }
+double Graph::calculateRisk(Node* node) { return double(node->totalLoss) / node->totalMigrants; }
 
 /**
  * φ = latitude
@@ -227,22 +227,25 @@ std::vector<Graph::Node*> Graph::findByLoss(double target, double range) {
 
 void Graph::plotPointsOnMap(const PNG blank_map) {
     PNG* theMap = new PNG(blank_map);
-    // create color of point
-    cs225::HSLAPixel red(0, 1 , 0.5, 1);
     // iterate through points
     for(auto vertex : vertices_) {
+        // create color of point
+        double hue = 120 - calculateRisk(vertex) * 120.0;
+        std::cout << hue << std::endl;
+        cs225::HSLAPixel color(hue, 1 , 0.5, 1);
         // color a 5x5 area centered on the point
         for (size_t x = 0; x < 4; x++) {
             for (size_t y = 0; y < 4; y++) {
                 // if the point is in bounds
                 if (latLonToXY(theMap, vertex->coordinates).first - 2 + x >= 0 && latLonToXY(theMap, vertex->coordinates).first - 2 + x < theMap->width() && 
                     latLonToXY(theMap, vertex->coordinates).second - 2 + y >= 0 && latLonToXY(theMap, vertex->coordinates).second - 2 + y < theMap->height()) {
-                        theMap->getPixel(latLonToXY(theMap, vertex->coordinates).first - 2 + x, latLonToXY(theMap, vertex->coordinates).second - 2 + y) = red;
+                        theMap->getPixel(latLonToXY(theMap, vertex->coordinates).first - 2 + x, latLonToXY(theMap, vertex->coordinates).second - 2 + y) = color;
                     }
             }
         }
     }
     theMap->writeToFile("../missing_migrants_map.png");
+    delete theMap;
 }
 
 void datasetCleaning(string filename) {
