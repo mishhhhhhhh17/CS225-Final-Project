@@ -7,6 +7,10 @@ using std::cout;
 using std::endl;
 
 TEST_CASE("Data parsing from CSV") {
+    SECTION("cleaning dataset") {
+        datasetCleaning("./data/MissingMigrants-Global-2022.csv");
+    }
+
     Graph g("../data/missing_migrants_2022.csv");
     vector<vector<string>> data = g.getData();
 

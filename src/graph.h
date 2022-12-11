@@ -13,6 +13,8 @@
 #include <map>
 #include <functional>
 #include <algorithm>
+#include <iostream>
+#include <fstream>
 
 using std::pair;
 using std::priority_queue;
@@ -145,3 +147,5 @@ class Graph {
     double calculateRisk(Node* node);
     
 };
+
+void datasetCleaning(string filename);
