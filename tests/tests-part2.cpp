@@ -43,7 +43,7 @@ TEST_CASE("Constructor") {
         result.push_back(eight);
         result.push_back(nine);
         result.push_back(ten);
-        REQUIRE(result == graph.data_);
+        REQUIRE(result == graph.getData());
 
     }
 
@@ -136,9 +136,5 @@ TEST_CASE("Constructor") {
         coor.second = 50;
         REQUIRE(graph.vertices_[1]->coordinates = coor);      
     }
-
-    
-
-
 
 }

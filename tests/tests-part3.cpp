@@ -30,8 +30,10 @@ TEST_CASE("BFS") {
     SECTION("target 15%, range 0") {
        std::vector<Graph::Node*> result = g.findByLoss(0.15, 0);
        REQUIRE(result.size() == 2);
-       REQUIRE(result.at(0)->incidentID == "b" || result.at(0)->incidentID == "c");
-       REQUIRE(result.at(1)->incidentID == "c" || result.at(1)->incidentID == "b");
+       bool first = result.at(0)->incidentID == "b" || result.at(0)->incidentID == "c";
+       REQUIRE(first);
+       bool second = result.at(1)->incidentID == "c" || result.at(1)->incidentID == "b";
+       REQUIRE(second);
     }
 
     SECTION("target 15%, range 0.05") {
@@ -53,4 +55,11 @@ TEST_CASE("BFS") {
             expected.erase(n->incidentID);
         }
     }
+}
+
+TEST_CASE("Mapping out points") {
+    Graph g("../bfs_test_data.csv");
+    PNG map;
+    map.readFromFile("../data/Equirectangular_projection_world_map.png");
+    g.plotPointsOnMap(map);
 }
