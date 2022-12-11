@@ -8,7 +8,7 @@ using std::endl;
 
 TEST_CASE("Data parsing from CSV") {
     SECTION("cleaning dataset") {
-        datasetCleaning("../data/MissingMigrants-Global-2022.csv");
+        utilities::datasetCleaning("../data/MissingMigrants-Global-2022.csv");
     }
 
     Graph g("../data/cleaned_dataset.csv");

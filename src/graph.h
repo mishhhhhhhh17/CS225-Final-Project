@@ -1,3 +1,15 @@
+/**
+ * @file graph.h
+ * 
+ * Definition for the Graph class that represents incidents for reported missing migrants
+ * 
+ * @author Marcel Hoang
+ * @author Adriana Shuaipaj
+ * @author Anna Polski
+ * @author Michelle Zhang
+ * 
+ * @date Fall 2022
+*/
 #pragma once
 
 #include "../lib/cs225/PNG.h"
@@ -16,7 +28,6 @@
 #include <functional>
 #include <algorithm>
 #include <iostream>
-#include <fstream>
 
 using std::pair;
 using std::priority_queue;
@@ -157,5 +168,3 @@ class Graph {
     double calculateRisk(Node* node);
     
 };
-
-void datasetCleaning(string filename);
