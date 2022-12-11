@@ -137,7 +137,14 @@ class Graph {
     double calculateDistance(Node* one, Node* two);
 
     /**
-     * helper function that converts (latitude, longitude) points to (x, y) points
+     * helper function that converts (latitude, longitude) points to (x, y) points on a equirectangular projection map
+     * 
+     * @cite https://stackoverflow.com/questions/1369512/converting-longitude-latitude-to-x-y-on-a-map-with-calibration-points
+     * 
+     * @param image blank map
+     * @param coor pair coordinates in latitude, longitude
+     * 
+     * @return pair of coordinates (x, y) coordinates in relation to the image of the map
     */
     pair<double, double> latLonToXY(const PNG* image, pair<double, double> coor);
 

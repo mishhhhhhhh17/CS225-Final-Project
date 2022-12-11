@@ -229,7 +229,9 @@ void Graph::plotPointsOnMap(const PNG blank_map) {
     PNG* theMap = new PNG(blank_map);
     // iterate through points
     for(auto vertex : vertices_) {
-        // create color of point
+        // create color of point based on calculated risk
+        // green - low risk
+        // red - high risk
         double hue = 120 - calculateRisk(vertex) * 120.0;
         std::cout << hue << std::endl;
         cs225::HSLAPixel color(hue, 1 , 0.5, 1);
