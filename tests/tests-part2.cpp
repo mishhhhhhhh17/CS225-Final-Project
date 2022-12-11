@@ -6,8 +6,8 @@
 #include <iostream>
 #include <set>
 
-/* TEST_CASE("Constructor") {
-    Graph graph = Graph("/workspaces/cs225/CS225-Final-Project/data/mini_test_case.csv");
+TEST_CASE("Constructor") {
+    Graph graph = Graph("../data/bfs_test_data.csv");
 
     SECTION("create simple graph, checking the set") {
         std::vector<std::vector<std::string>> result;
@@ -47,94 +47,62 @@
 
     }
 
-    SECTION("checking a Node") {
-        REQUIRE(graph.vertices_[1]->incidentID = "a");
-        REQUIRE(graph.vertices_[1]->totalLoss = 10);
-        REQUIRE(graph.vertices_[1]->totalMigrants = 100);
-        std::pair<double, double> coor;
-        coor.first = 0;
-        coor.second = 0;
-        REQUIRE(graph.vertices_[1]->coordinates = coor);
+    SECTION("checking nodes") {
+        for (auto node : graph.getVertices()) {
+            if (node->incidentID == "a") {
+                REQUIRE(node->totalLoss == 10);
+                REQUIRE(node->totalMigrants == 100);
+                std::pair<double, double> coor(0,0);
+                REQUIRE(node->coordinates == coor);
+            }
+            if (node->incidentID == "b") {
+                REQUIRE(node->totalLoss == 15);
+                REQUIRE(node->totalMigrants == 100);
+                std::pair<double, double> coor(1,0);
+                REQUIRE(node->coordinates == coor);
+            }
+            if (node->incidentID == "c") {
+                REQUIRE(node->totalLoss == 15);
+                REQUIRE(node->totalMigrants == 100);
+                std::pair<double, double> coor(10,10);
+                REQUIRE(node->coordinates == coor);
+            }
+            if (node->incidentID == "d") {
+                REQUIRE(node->totalLoss == 5);
+                REQUIRE(node->totalMigrants == 100);
+                std::pair<double, double> coor(50,50);
+                REQUIRE(node->coordinates == coor);
+            }
+            if (node->incidentID == "e") {
+                REQUIRE(node->totalLoss == 50);
+                REQUIRE(node->totalMigrants == 100);
+                std::pair<double, double> coor(0,1);
+                REQUIRE(node->coordinates == coor);
+            }
+            if (node->incidentID == "f") {
+                REQUIRE(node->totalLoss == 1);
+                REQUIRE(node->totalMigrants == 100);
+                std::pair<double, double> coor(100,100);
+                REQUIRE(node->coordinates == coor);
+            }
+            if (node->incidentID == "g") {
+                REQUIRE(node->totalLoss == 90);
+                REQUIRE(node->totalMigrants == 100);
+                std::pair<double, double> coor(10,0);
+                REQUIRE(node->coordinates == coor);
+            }
+            if (node->incidentID == "h") {
+                REQUIRE(node->totalLoss == 75);
+                REQUIRE(node->totalMigrants == 100);
+                std::pair<double, double> coor(5,50);
+                REQUIRE(node->coordinates == coor);
+            }
+            if (node->incidentID == "i") {
+                REQUIRE(node->totalLoss == 25);
+                REQUIRE(node->totalMigrants == 100);
+                std::pair<double, double> coor(100,50);
+                REQUIRE(node->coordinates == coor);
+            }
+        }
     }
-
-    SECTION("checking b Node") {
-        REQUIRE(graph.vertices_[1]->incidentID = "b");
-        REQUIRE(graph.vertices_[1]->totalLoss = 15);
-        REQUIRE(graph.vertices_[1]->totalMigrants = 100);
-        std::pair<double, double> coor;
-        coor.first = 1;
-        coor.second = 0;
-        REQUIRE(graph.vertices_[1]->coordinates = coor);      
-    }
-
-    SECTION("checking c Node") {
-        REQUIRE(graph.vertices_[1]->incidentID = "c");
-        REQUIRE(graph.vertices_[1]->totalLoss = 15);
-        REQUIRE(graph.vertices_[1]->totalMigrants = 100);
-        std::pair<double, double> coor;
-        coor.first = 10;
-        coor.second = 10;
-        REQUIRE(graph.vertices_[1]->coordinates = coor);      
-    }
-
-    SECTION("checking d Node") {
-        REQUIRE(graph.vertices_[1]->incidentID = "d");
-        REQUIRE(graph.vertices_[1]->totalLoss = 5);
-        REQUIRE(graph.vertices_[1]->totalMigrants = 100);
-        std::pair<double, double> coor;
-        coor.first = 50;
-        coor.second = 50;
-        REQUIRE(graph.vertices_[1]->coordinates = coor);      
-    }
-
-    SECTION("checking e Node") {
-        REQUIRE(graph.vertices_[1]->incidentID = "e");
-        REQUIRE(graph.vertices_[1]->totalLoss = 50);
-        REQUIRE(graph.vertices_[1]->totalMigrants = 100);
-        std::pair<double, double> coor;
-        coor.first = 0;
-        coor.second = 1;
-        REQUIRE(graph.vertices_[1]->coordinates = coor);      
-    }
-
-    SECTION("checking f Node") {
-        REQUIRE(graph.vertices_[1]->incidentID = "f");
-        REQUIRE(graph.vertices_[1]->totalLoss = 1);
-        REQUIRE(graph.vertices_[1]->totalMigrants = 100);
-        std::pair<double, double> coor;
-        coor.first = 100;
-        coor.second = 100;
-        REQUIRE(graph.vertices_[1]->coordinates = coor);      
-    }
-
-    SECTION("checking g Node") {
-        REQUIRE(graph.vertices_[1]->incidentID = "g");
-        REQUIRE(graph.vertices_[1]->totalLoss = 90);
-        REQUIRE(graph.vertices_[1]->totalMigrants = 100);
-        std::pair<double, double> coor;
-        coor.first = 10;
-        coor.second = 0;
-        REQUIRE(graph.vertices_[1]->coordinates = coor);      
-    }
-
-    SECTION("checking h Node") {
-        REQUIRE(graph.vertices_[1]->incidentID = "h");
-        REQUIRE(graph.vertices_[1]->totalLoss = 75);
-        REQUIRE(graph.vertices_[1]->totalMigrants = 100);
-        std::pair<double, double> coor;
-        coor.first = 5;
-        coor.second = 50;
-        REQUIRE(graph.vertices_[1]->coordinates = coor);      
-    }
-
-    SECTION("checking i Node") {
-        REQUIRE(graph.vertices_[1]->incidentID = "i");
-        REQUIRE(graph.vertices_[1]->totalLoss = 25);
-        REQUIRE(graph.vertices_[1]->totalMigrants = 100);
-        std::pair<double, double> coor;
-        coor.first = 100;
-        coor.second = 50;
-        REQUIRE(graph.vertices_[1]->coordinates = coor);      
-    }
-
-} */
+}
