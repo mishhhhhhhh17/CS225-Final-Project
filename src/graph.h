@@ -3,6 +3,8 @@
 #include "../lib/cs225/PNG.h"
 #include "../lib/cs225/HSLAPixel.h"
 
+#include "Animation.h"
+
 #include <cmath>
 #include <queue>
 #include <set>

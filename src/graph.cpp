@@ -228,13 +228,15 @@ std::vector<Graph::Node*> Graph::findByLoss(double target, double range) {
 
 void Graph::plotPointsOnMap(const PNG blank_map) {
     PNG* theMap = new PNG(blank_map);
+    Animation animation;
+    animation.addFrame(*theMap);
+    int increment = 0;
     // iterate through points
     for(auto vertex : vertices_) {
         // create color of point based on calculated risk
         // green - low risk
         // red - high risk
         double hue = 120 - calculateRisk(vertex) * 120.0;
-        std::cout << hue << std::endl;
         cs225::HSLAPixel color(hue, 1 , 0.5, 1);
         // color a 5x5 area centered on the point
         for (size_t x = 0; x < 4; x++) {
@@ -246,8 +248,17 @@ void Graph::plotPointsOnMap(const PNG blank_map) {
                     }
             }
         }
+        // add frame to animation
+        if (increment % 50 == 0) {
+            animation.addFrame(*theMap);
+            increment++;
+        }   else {
+            increment++;
+        }
     }
+    animation.addFrame(*theMap);
     theMap->writeToFile("../missing_migrants_map.png");
+    animation.write("../missing_migrants_map_plotting.gif");
     delete theMap;
 }
 
