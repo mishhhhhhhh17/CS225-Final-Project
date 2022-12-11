@@ -48,8 +48,8 @@ TEST_CASE("BFS") {
 
     SECTION("target 50%, range 0.25") {
         std::vector<Graph::Node*> result = g.findByLoss(0.5, 0.25);
-        std::set<std::string> expected = {"e", "h", "i"};
-        REQUIRE(result.size() == 3);
+        std::set<std::string> expected = {"e"};
+        REQUIRE(result.size() == 1);
         for (auto n : result) {
             REQUIRE(expected.find(n->incidentID) != expected.end());
             expected.erase(n->incidentID);
@@ -61,5 +61,5 @@ TEST_CASE("Mapping out points") {
     Graph g("../data/cleaned_dataset.csv");
     PNG map;
     map.readFromFile("../data/Equirectangular_projection_world_map.png");
-    g.plotPointsOnMap(map);
+    g.plotPointsOnMap(map, g.getVertices());
 }
