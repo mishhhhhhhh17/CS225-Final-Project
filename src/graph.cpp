@@ -35,7 +35,7 @@ Graph& Graph::operator=(const Graph& other) {
 Graph::Graph(string filename) {
     ifstream ifs{filename};
     for (string line; getline(ifs, line); line = "") {
-        vector<string> vec = utilities::GetSubstrs(line, ',');
+        vector<string> vec = utilities::GetSubstrs(line, ',', '"');
         data_.push_back(vec);
     }
 
@@ -51,7 +51,9 @@ Graph::Graph(string filename) {
         coor.second = stod(data_[i][4]);
         toInsert->coordinates = coor;
         if (i == 1) lowest = toInsert;
-        if (calculateRisk(toInsert) < calculateRisk(lowest)) lowest = toInsert;
+        if (toInsert->totalMigrants > 0) {
+            if (calculateRisk(toInsert) < calculateRisk(lowest)) lowest = toInsert;
+        }
         vertices_.insert(toInsert);
     }
 
@@ -243,4 +245,29 @@ void Graph::plotPointsOnMap(const PNG blank_map) {
         }
     }
     theMap->writeToFile("../missing_migrants_map.png");
+}
+
+void datasetCleaning(string filename) {
+    std::ofstream cleaned("cleaned_dataset.csv");
+    cleaned << "incidentID,totDeadMissing,totalMigrants,xCoord,yCoord" << std::endl;
+    ifstream ifs{filename};
+    for (string line; getline(ifs, line); line = "") {
+        vector<string> vec = utilities::GetSubstrs(line, ',', '"');
+        if (vec[0] != "\"Main ID\"") {
+            int dead_missing;
+            int survivors;
+            vector<string> coords = utilities::GetSubstrs(vec[16], ',', '!');
+            string xcord = coords[0].substr(1, coords[0].size() - 1);
+            string ycord = coords[1].substr(1, coords[1].size() - 2);
+            if (vec[8] == "") {
+                dead_missing = 0;
+            } else  dead_missing = stoi(vec[8]);
+            if (vec[9] == "") {
+                survivors = 0;
+            }   else survivors = stoi(vec[9]);
+
+            cleaned << vec[1] << "," << dead_missing << "," << (dead_missing + survivors) << "," << xcord << "," << ycord << std::endl;
+        }
+    }
+    cleaned.close();
 }
