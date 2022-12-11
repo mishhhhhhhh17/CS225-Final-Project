@@ -32,13 +32,10 @@ Graph::~Graph() {
 }
 
 Graph::Graph(const Graph& other) {
-    // @todo
     _copy(other);
-    
 }
     
 Graph& Graph::operator=(const Graph& other) {
-    // @todo
     if (this != &other) {
         _destroy();
         _copy(other);
