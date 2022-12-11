@@ -21,6 +21,7 @@ Graph::~Graph() {
 
 Graph::Graph(const Graph& other) {
     // @todo
+    
 }
     
 Graph& Graph::operator=(const Graph& other) {

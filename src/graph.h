@@ -82,6 +82,7 @@ class Graph {
     //to help with operator=
     void _copy(const Graph& other);
 
+    // destructor helper function
     void _destroy();
 
     vector<Node*> findByLoss(double target, double range);
