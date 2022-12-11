@@ -69,7 +69,6 @@ Graph::Graph(string filename) {
     for (auto v : vertices_) { // populating edgeList
         vector<pair<Node*, double>> vect;
         for (auto e : vertices_) {
-            std::cout << "dist between " << v->incidentID << " and " << e->incidentID << " = " << calculateDistance(v, e) << std::endl;
             if (calculateDistance(v, e) != 0 && calculateDistance(v, e) < 750) vect.push_back({e, calculateDistance(v, e)});
         }
         edgeList_[v] = vect;
@@ -99,9 +98,9 @@ double Graph::calculateRisk(Node* node) { return double(node->totalLoss) / node-
  * distance = R ⋅ c
 */
 double Graph::calculateDistance(Node* one, Node* two){
-    double a = pow(((two->coordinates.first * M_PI / 180.0) - (one->coordinates.first * M_PI / 180.0))/2.0, 2.0)
+    double a = pow(sin(((two->coordinates.first * M_PI / 180.0) - (one->coordinates.first * M_PI / 180.0))/2.0), 2.0)
                 + cos(one->coordinates.first * M_PI / 180.0) * cos(two->coordinates.first * M_PI / 180.0)
-                * pow(((two->coordinates.second * M_PI / 180.0) - (one->coordinates.second * M_PI) / 180.0)/2.0, 2.0);
+                * pow(sin(((two->coordinates.second * M_PI / 180.0) - (one->coordinates.second * M_PI) / 180.0)/2.0), 2.0);
     double c = 2 * atan2(sqrt(a), sqrt(1-a));
     return 6371 * c;
 }
@@ -237,7 +236,7 @@ std::vector<Graph::Node*> Graph::findByLoss(double target, double range) {
     return out;
 }
 
-void Graph::plotPointsOnMap(const PNG blank_map) {
+void Graph::plotPointsOnMap(const PNG blank_map ) {
     PNG* theMap = new PNG(blank_map);
     Animation animation;
     animation.addFrame(*theMap);
