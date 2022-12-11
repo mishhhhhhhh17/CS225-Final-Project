@@ -33,6 +33,7 @@ Graph::~Graph() {
 
 Graph::Graph(const Graph& other) {
     // @todo
+    _copy(other);
     
 }
     
