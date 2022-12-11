@@ -279,30 +279,30 @@ The bad incidents are colored red
 
 The safer incidents are colored green
 */
-void Graph::plotPointsOnMap(const PNG blank_map) {
+void Graph::plotPointsOnMap(const PNG blank_map, set<Node*> nodes) {
     PNG* theMap = new PNG(blank_map);
     Animation animation;
     animation.addFrame(*theMap);
     int increment = 0;
     // iterate through points
-    for(auto vertex : vertices_) {
+    for(auto n : nodes) {
         // create color of point based on calculated risk
         // green - low risk
         // red - high risk
-        double hue = 120 - calculateRisk(vertex) * 120.0;
+        double hue = 120 - calculateRisk(n) * 120.0;
         cs225::HSLAPixel color(hue, 1 , 0.5, 1);
         // color a 5x5 area centered on the point
         for (size_t x = 0; x < 4; x++) {
             for (size_t y = 0; y < 4; y++) {
                 // if the point is in bounds
-                if (latLonToXY(theMap, vertex->coordinates).first - 2 + x >= 0 && latLonToXY(theMap, vertex->coordinates).first - 2 + x < theMap->width() && 
-                    latLonToXY(theMap, vertex->coordinates).second - 2 + y >= 0 && latLonToXY(theMap, vertex->coordinates).second - 2 + y < theMap->height()) {
-                        theMap->getPixel(latLonToXY(theMap, vertex->coordinates).first - 2 + x, latLonToXY(theMap, vertex->coordinates).second - 2 + y) = color;
+                if (latLonToXY(theMap, n->coordinates).first - 2 + x >= 0 && latLonToXY(theMap, n->coordinates).first - 2 + x < theMap->width() && 
+                    latLonToXY(theMap, n->coordinates).second - 2 + y >= 0 && latLonToXY(theMap, n->coordinates).second - 2 + y < theMap->height()) {
+                        theMap->getPixel(latLonToXY(theMap, n->coordinates).first - 2 + x, latLonToXY(theMap, n->coordinates).second - 2 + y) = color;
                     }
             }
         }
         // add frame to animation
-        if (increment % 75 == 0) {
+        if (increment % 100 == 0) {
             animation.addFrame(*theMap);
             increment++;
         }   else {

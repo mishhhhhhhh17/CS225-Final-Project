@@ -78,6 +78,17 @@ TEST_CASE("Graph members") {
 
 TEST_CASE("prim's algorithm") {
     Graph graph("../data/small_test_case.csv");
+
+    // printing edgelist
+    /*auto graph_edgelist = graph.getEdgeList();
+    for (auto edge : graph_edgelist) {
+        cout << '\n' << edge.first->incidentID << ": " << endl;
+        for (auto e : edge.second) {
+            cout << e.first->incidentID << " " << e.second << endl;
+        }
+    }
+    */
+
     Graph span = graph.prim();
     auto edgelist = span.getEdgeList();
 

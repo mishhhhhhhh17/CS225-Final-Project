@@ -100,7 +100,7 @@ class Graph {
 
     vector<Node*> findByLoss(double target, double range);
 
-    void plotPointsOnMap(const PNG blank_map);
+    void plotPointsOnMap(const PNG blank_map, set<Node*> nodes);
 
     Graph prim();
 
