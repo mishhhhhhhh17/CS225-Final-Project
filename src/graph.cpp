@@ -85,10 +85,6 @@ Graph::Graph(string filename) {
     }
 }
 
-//returns a vector of nodes from current Node (which is the input) to safest node
-vector<Graph::Node*> Graph::getShortestPath(Node* node) {
-    return short_paths_[node];
-}
 
 /*
 turns latitude and longitude coordinates from the csv file into x and y points that correspond to the PNG image we are using
