@@ -6,8 +6,8 @@
 #include <iostream>
 #include <set>
 
-/* TEST_CASE("Constructor") {
-    Graph graph = Graph("/workspaces/cs225/CS225-Final-Project/data/mini_test_case.csv");
+TEST_CASE("Constructor") {
+    Graph graph = Graph("../data/bfs_test_data.csv");
 
     SECTION("create simple graph, checking the set") {
         std::vector<std::vector<std::string>> result;
@@ -47,7 +47,7 @@
 
     }
 
-    SECTION("checking a Node") {
+    /*SECTION("checking a Node") {
         REQUIRE(graph.vertices_[1]->incidentID = "a");
         REQUIRE(graph.vertices_[1]->totalLoss = 10);
         REQUIRE(graph.vertices_[1]->totalMigrants = 100);
@@ -136,5 +136,5 @@
         coor.second = 50;
         REQUIRE(graph.vertices_[1]->coordinates = coor);      
     }
-
-} */
+*/
+}

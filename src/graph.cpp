@@ -262,7 +262,7 @@ void Graph::plotPointsOnMap(const PNG blank_map) {
             }
         }
         // add frame to animation
-        if (increment % 50 == 0) {
+        if (increment % 75 == 0) {
             animation.addFrame(*theMap);
             increment++;
         }   else {
