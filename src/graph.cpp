@@ -53,7 +53,6 @@ Graph::Graph(string filename) {
     }
 
 
-    Node* lowest;
     for(unsigned int i = 1; i < data_.size(); i++) {
         struct Node* toInsert = new Node();
         toInsert->incidentID = data_[i][0];
@@ -63,14 +62,16 @@ Graph::Graph(string filename) {
         coor.first = stod(data_[i][3]);
         coor.second = stod(data_[i][4]);
         toInsert->coordinates = coor;
-        if (i == 1) lowest = toInsert;
-        if (calculateRisk(toInsert) < calculateRisk(lowest)) lowest = toInsert;
+        // finding the lowest risk node
+        if (i == 1) lowest_risk_ = toInsert;
+        if (calculateRisk(toInsert) < calculateRisk(lowest_risk_)) lowest_risk_ = toInsert;
         vertices_.insert(toInsert);
     }
 
     for (auto v : vertices_) { // populating edgeList
         vector<pair<Node*, double>> vect;
         for (auto e : vertices_) {
+            std::cout << "dist between " << v->incidentID << " and " << e->incidentID << " = " << calculateDistance(v, e) << std::endl;
             if (calculateDistance(v, e) != 0 && calculateDistance(v, e) < 750) vect.push_back({e, calculateDistance(v, e)});
         }
         edgeList_[v] = vect;
