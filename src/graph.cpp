@@ -276,9 +276,6 @@ std::vector<Graph::Node*> Graph::findByLoss(double target, double range) {
     return out;
 }
 
-<<<<<<< HEAD
-void Graph::plotPointsOnMap(const PNG blank_map ) {
-=======
 /*
 We plotted all the incidents onto a map
 
@@ -287,7 +284,6 @@ The bad incidents are colored red
 The safer incidents are colored green
 */
 void Graph::plotPointsOnMap(const PNG blank_map) {
->>>>>>> f77a9f4080014d34e5a16d2603486b8b024229bd
     PNG* theMap = new PNG(blank_map);
     Animation animation;
     animation.addFrame(*theMap);
