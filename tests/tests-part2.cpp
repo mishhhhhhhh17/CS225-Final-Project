@@ -6,7 +6,7 @@
 #include <iostream>
 #include <set>
 
-/* TEST_CASE("Constructor") {
+TEST_CASE("Constructor") {
     Graph graph = Graph("/workspaces/cs225/CS225-Final-Project/data/mini_test_case.csv");
 
     SECTION("create simple graph, checking the set") {
@@ -137,4 +137,4 @@
         REQUIRE(graph.vertices_[1]->coordinates = coor);      
     }
 
-} */
+}
