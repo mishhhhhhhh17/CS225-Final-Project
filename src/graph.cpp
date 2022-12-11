@@ -51,9 +51,7 @@ Graph::Graph(string filename) {
         coor.second = stod(data_[i][4]);
         toInsert->coordinates = coor;
         if (i == 1) lowest = toInsert;
-        if (toInsert->totalMigrants > 0) {
-            if (calculateRisk(toInsert) < calculateRisk(lowest)) lowest = toInsert;
-        }
+        if (calculateRisk(toInsert) < calculateRisk(lowest)) lowest = toInsert;
         vertices_.insert(toInsert);
     }
 
@@ -270,4 +268,4 @@ void datasetCleaning(string filename) {
         }
     }
     cleaned.close();
-}
+};

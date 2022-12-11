@@ -58,8 +58,8 @@ TEST_CASE("BFS") {
 }
 
 TEST_CASE("Mapping out points") {
-    Graph g("./data/missing_migrants_2022.csv");
+    Graph g("../data/cleaned_dataset.csv");
     PNG map;
-    map.readFromFile("./data/Equirectangular_projection_world_map.png");
+    map.readFromFile("../data/Equirectangular_projection_world_map.png");
     g.plotPointsOnMap(map);
 }

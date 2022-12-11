@@ -8,10 +8,10 @@ using std::endl;
 
 TEST_CASE("Data parsing from CSV") {
     SECTION("cleaning dataset") {
-        datasetCleaning("./data/MissingMigrants-Global-2022.csv");
+        datasetCleaning("../data/MissingMigrants-Global-2022.csv");
     }
 
-    Graph g("../data/missing_migrants_2022.csv");
+    Graph g("../data/cleaned_dataset.csv");
     vector<vector<string>> data = g.getData();
 
     SECTION("actual database parsing") {
@@ -30,15 +30,15 @@ TEST_CASE("Data parsing from CSV") {
         REQUIRE(data.at(692).at(4) == "-111.060104");
         REQUIRE(data.at(692).at(1) == "1");
         REQUIRE(data.at(692).at(1) != "1.0");
-        REQUIRE(data.at(34).at(2) == "1.0");
+        REQUIRE(data.at(34).at(2) == "1");
         REQUIRE(data.at(34).at(0) == "2022.MMP00035");
-        REQUIRE(data.at(829).at(2) == "0.0");
+        REQUIRE(data.at(829).at(2) == "116");
         REQUIRE(data.at(829).at(3) == "37.35629868");
     }
 
-    // 2022.MMP694,1,1.0,31.67987304,-111.060104 -> row 693
-    // 2022.MMP00035,1,1.0,32.5488045,-117.0228877 -> row 35
-    // 2022.MMP817,8,0.0,37.35629868,25.260743 -> row 830
+    // 2022.MMP694,1,1,31.67987304,-111.060104 -> row 693
+    // 2022.MMP00035,1,1,32.5488045,-117.0228877 -> row 35
+    // 2022.MMP817,8,116,37.35629868,25.260743 -> row 830
 
     SECTION("parsing mini test csv") {
         Graph a("../data/mini_test_case.csv");
