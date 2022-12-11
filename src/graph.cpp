@@ -27,14 +27,17 @@ using std::vector;
 using std::ifstream;
 using std::find;
 
+//graph destructor 
 Graph::~Graph() {
     _destroy();
 }
 
+//graph copy constructor
 Graph::Graph(const Graph& other) {
     _copy(other);
 }
-    
+
+//graph operator= constructor 
 Graph& Graph::operator=(const Graph& other) {
     if (this != &other) {
         _destroy();
@@ -43,6 +46,13 @@ Graph& Graph::operator=(const Graph& other) {
     return *this;
 }
 
+/*graph constructor
+
+    adds all the data into our vector of vector of strings 
+    constructed all of our nodes
+    populated edgelist (keeping track of what nodes are connected to what other nodes)
+
+*/
 Graph::Graph(string filename) {
     ifstream ifs{filename};
     for (string line; getline(ifs, line); line = "") {
@@ -75,19 +85,26 @@ Graph::Graph(string filename) {
     }
 }
 
+//returns a vector of nodes from current Node (which is the input) to safest node
 vector<Graph::Node*> Graph::getShortestPath(Node* node) {
     return short_paths_[node];
 }
 
+/*
+turns latitude and longitude coordinates from the csv file into x and y points that correspond to the PNG image we are using
+*/
 pair<double, double> Graph::latLonToXY(const PNG* image, pair<double, double> coor) {
     double x = image->width() * (180 + coor.second) / 360;
     double y = image->height() * (90 - coor.first) / 180;
     return {x, y};
 }
 
+//calculates the percentage of how many people died in one incident
 double Graph::calculateRisk(Node* node) { return double(node->totalLoss) / node->totalMigrants; }
 
 /**
+calculates distance between two nodes using the haversine formula
+
  * φ = latitude
  * λ = longitude
  * R = Earth's radius = 6,371km
@@ -119,6 +136,12 @@ void Graph::addEdge(Node* node1, Node* node2, double distance) {
     edgeList_[node2].push_back({node1, distance});
 }
 
+/*
+Prim's algorithm 
+
+returns a minimum spanning tree
+
+*/
 Graph Graph::prim() {
     map<Node*, double> pq; // fake heap with distance as second argument
     map<Node*, Node*> predecessor; // <node, parent>
@@ -155,7 +178,9 @@ Graph Graph::prim() {
     return spanning_tree;
 }
 
-
+/* 
+copy constructor helper function
+*/
 void Graph::_copy(const Graph& other){
     if(!other.vertices_.empty()) {
         //begin populating the edge list and vertices.
@@ -178,7 +203,9 @@ void Graph::_copy(const Graph& other){
     }
 }
 
-
+/*
+graph destructor helper function
+*/
 void Graph::_destroy(){
     for (auto v: vertices_) {
         delete v;
@@ -186,18 +213,31 @@ void Graph::_destroy(){
 }
 
 // testing functions
+
+/*
+returns the data
+*/
 vector<vector<string>> Graph::getData() {
     return data_;
 }
 
+/*
+returns the edgeList
+*/
 map<Graph::Node*, vector<pair<Graph::Node*, double>>> Graph::getEdgeList() {
     return edgeList_;
 }
 
+/*
+return the vertices
+*/
 set<Graph::Node*> Graph::getVertices() {
     return vertices_;
 }
 
+/*
+BFS function
+*/
 std::vector<Graph::Node*> Graph::findByLoss(double target, double range) {
     // to return
     std::vector<Node*> out;
@@ -236,7 +276,18 @@ std::vector<Graph::Node*> Graph::findByLoss(double target, double range) {
     return out;
 }
 
+<<<<<<< HEAD
 void Graph::plotPointsOnMap(const PNG blank_map ) {
+=======
+/*
+We plotted all the incidents onto a map
+
+The bad incidents are colored red
+
+The safer incidents are colored green
+*/
+void Graph::plotPointsOnMap(const PNG blank_map) {
+>>>>>>> f77a9f4080014d34e5a16d2603486b8b024229bd
     PNG* theMap = new PNG(blank_map);
     Animation animation;
     animation.addFrame(*theMap);
