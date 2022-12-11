@@ -7,7 +7,7 @@
 #include <set>
 
 TEST_CASE("BFS") {
-    Graph g("../bfs_test_data.csv");
+    Graph g("../data/bfs_test_data.csv");
     
 
     SECTION("target 10%, range 0") {

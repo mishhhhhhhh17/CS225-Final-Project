@@ -40,8 +40,8 @@ TEST_CASE("Data parsing from CSV") {
     // 2022.MMP00035,1,1,32.5488045,-117.0228877 -> row 35
     // 2022.MMP817,8,116,37.35629868,25.260743 -> row 830
 
-    SECTION("parsing mini test csv") {
-        Graph a("../data/mini_test_case.csv");
+    SECTION("parsing bfs test csv") {
+        Graph a("../data/bfs_test_data.csv");
         vector<vector<string>> actual_data = a.getData();
         vector<vector<string>> correct_data = {
             {"incidentID","totDeadMissing","totalMigrants","xCoord","yCoord"}, 
@@ -60,9 +60,9 @@ TEST_CASE("Data parsing from CSV") {
 }
 
 TEST_CASE("Graph members") {
-    SECTION("mini test case csv") {
+    SECTION("bfs test case csv") {
         // testing vertices
-        Graph a("../data/mini_test_case.csv");
+        Graph a("../data/bfs_test_data.csv");
         set<Graph::Node*> v = a.getVertices();
         REQUIRE(v.size() == 9); 
         
