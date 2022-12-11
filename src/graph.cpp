@@ -232,7 +232,6 @@ void Graph::plotPointsOnMap(const PNG blank_map) {
     // iterate through points
     for(auto vertex : vertices_) {
         // color a 5x5 area centered on the point
-        std::cout << "(x,y): " << latLonToXY(theMap, vertex->coordinates).first << ", " << latLonToXY(theMap, vertex->coordinates).second << std::endl;
         for (size_t x = 0; x < 4; x++) {
             for (size_t y = 0; y < 4; y++) {
                 // if the point is in bounds
