@@ -116,9 +116,6 @@ class Graph {
 
     map<Node*, vector<pair<Node*, double>>> edgeList_;
 
-    // shortest paths
-    map<Node*, vector<Node*>> short_paths_;
-
     // set of all vertices in the Graph
     set<Node*> vertices_;
 
