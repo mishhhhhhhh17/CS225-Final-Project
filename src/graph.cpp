@@ -302,7 +302,7 @@ PNG Graph::plotPointsOnMap(const PNG map) {
             }
         }
         // add frame to animation
-        if (increment % 200 == 0) {
+        if (increment % 150 == 0) {
             animation.addFrame(mapCopy);
             increment++;
         }   else {
@@ -311,7 +311,7 @@ PNG Graph::plotPointsOnMap(const PNG map) {
     }
     animation.addFrame(mapCopy);
     mapCopy.writeToFile("../missing_migrants_map.png");
-    animation.write("../missing_migrants_map_plotting.gif");
+    animation.write("../missing_migrants_map.gif");
     return mapCopy;
 }
 
@@ -319,46 +319,61 @@ PNG Graph::pathsOnMap(const PNG map) {
     PNG mapCopy(map);
     HSLAPixel black(0,0,0);
     for (auto n : edgeList_) {
-
-        /* deltaX = endpoint.X - origin.X
-        deltaY = endpoint.Y - origin.Y
-        error = 0
-
-        // Note the below fails for completely vertical lines.
-        deltaError = absoluteValue(deltaY / deltaX)
-
-        Y = origin.Y
-        for (X from origin.X to endpoint.X) {
-            surface.PlotPixel(X, Y)
-            error = error + deltaError 
-            if (error >= 0.5) {
-                ++Y;
-                error -= 1.0
-            }
-        } */
-
-
-        double x1 = latLonToXY(&mapCopy, n.first->coordinates).first;
-        double y1 = latLonToXY(&mapCopy, n.first->coordinates).second;
         for (unsigned int i = 0; i < n.second.size(); i++) {
-           double x2 = latLonToXY(&mapCopy, n.second[i].first->coordinates).first;
-                double y2 = latLonToXY(&mapCopy, n.second[i].first->coordinates).second;
-                double deltaX = x2 - x1;
-                double deltaY = y2 - y1;
-                double error = 0;
-                double deltaError = 0;
-                if (deltaX != 0) {
-                    deltaError = std::abs(deltaY/deltaX);
+            // Bresenham's line algorithm
+            // @cite https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C++
+            double x1 = latLonToXY(&mapCopy, n.first->coordinates).first;
+            double y1 = latLonToXY(&mapCopy, n.first->coordinates).second;
+            double x2 = latLonToXY(&mapCopy, n.second[i].first->coordinates).first;
+            double y2 = latLonToXY(&mapCopy, n.second[i].first->coordinates).second;
+            const bool steep = (fabs(y2 - y1) > fabs(x2 - x1));
+            if(steep) {
+                std::swap(x1, y1);
+                std::swap(x2, y2);
+            }
+            if(x1 > x2) {
+                std::swap(x1, x2);
+                std::swap(y1, y2);
+            }
+
+            const float dx = x2 - x1;
+            const float dy = fabs(y2 - y1);
+            
+            float error = dx / 2.0f;
+            const int ystep = (y1 < y2) ? 1 : -1;
+            int y = (int)y1;
+
+            const int maxX = (int)x2;
+
+            for(int x=(int)x1; x<=maxX; x++) {
+                if(steep) {
+                    mapCopy.getPixel(y,x) = black;
+                }   else {
+                    mapCopy.getPixel(x,y) = black;
                 }
-                double y = y1;
-                for (int x = x1; x < x2; x++) {
-                    mapCopy.getPixel(x, y) = black;
-                    error += deltaError;
-                    if (error >= 0.5) {
-                        y++;
-                        error -= 1.0;
+                error -= dy;
+                if(error < 0) {
+                    y += ystep;
+                    error += dx;
+                }
+            }
+        }
+    }
+    for(auto n : vertices_) {
+        // create color of point based on calculated risk
+        // green - low risk
+        // red - high risk
+        double hue = 120 - calculateRisk(n) * 120.0;
+        cs225::HSLAPixel color(hue, 1 , 0.5, 1);
+        // color a 5x5 area centered on the point
+        for (size_t x = 0; x < 4; x++) {
+            for (size_t y = 0; y < 4; y++) {
+                // if the point is in bounds
+                if (latLonToXY(&mapCopy, n->coordinates).first - 2 + x >= 0 && latLonToXY(&mapCopy, n->coordinates).first - 2 + x < mapCopy.width() && 
+                    latLonToXY(&mapCopy, n->coordinates).second - 2 + y >= 0 && latLonToXY(&mapCopy, n->coordinates).second - 2 + y < mapCopy.height()) {
+                        mapCopy.getPixel(latLonToXY(&mapCopy, n->coordinates).first - 2 + x, latLonToXY(&mapCopy, n->coordinates).second - 2 + y) = color;
                     }
-                }
+            }
         }
     }
     mapCopy.writeToFile("../missing_migrants_path.png");

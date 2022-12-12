@@ -61,6 +61,6 @@ TEST_CASE("Mapping out points") {
     Graph g("../data/cleaned_dataset.csv");
     PNG map;
     map.readFromFile("../data/Equirectangular_projection_world_map.png");
-    PNG points = g.plotPointsOnMap(map);
-    g.pathsOnMap(points);
+    g.plotPointsOnMap(map);
+    g.pathsOnMap(map);
 }
