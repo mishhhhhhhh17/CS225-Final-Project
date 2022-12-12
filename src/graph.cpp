@@ -169,6 +169,7 @@ Graph Graph::prim() {
 
     for (auto node : visited) { // populating spanning_tree
         if (predecessor[node] != NULL) spanning_tree.addEdge(node, predecessor[node], calculateDistance(node, predecessor[node]));
+        spanning_tree.vertices_.insert(node);
     }
     
     return spanning_tree;
