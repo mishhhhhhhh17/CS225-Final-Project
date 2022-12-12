@@ -279,13 +279,13 @@ The bad incidents are colored red
 
 The safer incidents are colored green
 */
-void Graph::plotPointsOnMap(const PNG blank_map, set<Node*> nodes) {
-    PNG* theMap = new PNG(blank_map);
+PNG Graph::plotPointsOnMap(const PNG map) {
+    PNG mapCopy(map);
     Animation animation;
-    animation.addFrame(*theMap);
+    animation.addFrame(mapCopy);
     int increment = 0;
     // iterate through points
-    for(auto n : nodes) {
+    for(auto n : vertices_) {
         // create color of point based on calculated risk
         // green - low risk
         // red - high risk
@@ -295,22 +295,87 @@ void Graph::plotPointsOnMap(const PNG blank_map, set<Node*> nodes) {
         for (size_t x = 0; x < 4; x++) {
             for (size_t y = 0; y < 4; y++) {
                 // if the point is in bounds
-                if (latLonToXY(theMap, n->coordinates).first - 2 + x >= 0 && latLonToXY(theMap, n->coordinates).first - 2 + x < theMap->width() && 
-                    latLonToXY(theMap, n->coordinates).second - 2 + y >= 0 && latLonToXY(theMap, n->coordinates).second - 2 + y < theMap->height()) {
-                        theMap->getPixel(latLonToXY(theMap, n->coordinates).first - 2 + x, latLonToXY(theMap, n->coordinates).second - 2 + y) = color;
+                if (latLonToXY(&mapCopy, n->coordinates).first - 2 + x >= 0 && latLonToXY(&mapCopy, n->coordinates).first - 2 + x < mapCopy.width() && 
+                    latLonToXY(&mapCopy, n->coordinates).second - 2 + y >= 0 && latLonToXY(&mapCopy, n->coordinates).second - 2 + y < mapCopy.height()) {
+                        mapCopy.getPixel(latLonToXY(&mapCopy, n->coordinates).first - 2 + x, latLonToXY(&mapCopy, n->coordinates).second - 2 + y) = color;
                     }
             }
         }
         // add frame to animation
-        if (increment % 100 == 0) {
-            animation.addFrame(*theMap);
+        if (increment % 150 == 0) {
+            animation.addFrame(mapCopy);
             increment++;
         }   else {
             increment++;
         }
     }
-    animation.addFrame(*theMap);
-    theMap->writeToFile("../missing_migrants_map.png");
-    animation.write("../missing_migrants_map_plotting.gif");
-    delete theMap;
+    animation.addFrame(mapCopy);
+    mapCopy.writeToFile("../missing_migrants_map.png");
+    animation.write("../missing_migrants_map.gif");
+    return mapCopy;
+}
+
+PNG Graph::pathsOnMap(const PNG map) {
+    PNG mapCopy(map);
+    HSLAPixel black(0,0,0);
+    for (auto n : edgeList_) {
+        for (unsigned int i = 0; i < n.second.size(); i++) {
+            // Bresenham's line algorithm
+            // @cite https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C++
+            double x1 = latLonToXY(&mapCopy, n.first->coordinates).first;
+            double y1 = latLonToXY(&mapCopy, n.first->coordinates).second;
+            double x2 = latLonToXY(&mapCopy, n.second[i].first->coordinates).first;
+            double y2 = latLonToXY(&mapCopy, n.second[i].first->coordinates).second;
+            const bool steep = (fabs(y2 - y1) > fabs(x2 - x1));
+            if(steep) {
+                std::swap(x1, y1);
+                std::swap(x2, y2);
+            }
+            if(x1 > x2) {
+                std::swap(x1, x2);
+                std::swap(y1, y2);
+            }
+
+            const float dx = x2 - x1;
+            const float dy = fabs(y2 - y1);
+            
+            float error = dx / 2.0f;
+            const int ystep = (y1 < y2) ? 1 : -1;
+            int y = (int)y1;
+
+            const int maxX = (int)x2;
+
+            for(int x=(int)x1; x<=maxX; x++) {
+                if(steep) {
+                    mapCopy.getPixel(y,x) = black;
+                }   else {
+                    mapCopy.getPixel(x,y) = black;
+                }
+                error -= dy;
+                if(error < 0) {
+                    y += ystep;
+                    error += dx;
+                }
+            }
+        }
+    }
+    for(auto n : vertices_) {
+        // create color of point based on calculated risk
+        // green - low risk
+        // red - high risk
+        double hue = 120 - calculateRisk(n) * 120.0;
+        cs225::HSLAPixel color(hue, 1 , 0.5, 1);
+        // color a 5x5 area centered on the point
+        for (size_t x = 0; x < 4; x++) {
+            for (size_t y = 0; y < 4; y++) {
+                // if the point is in bounds
+                if (latLonToXY(&mapCopy, n->coordinates).first - 2 + x >= 0 && latLonToXY(&mapCopy, n->coordinates).first - 2 + x < mapCopy.width() && 
+                    latLonToXY(&mapCopy, n->coordinates).second - 2 + y >= 0 && latLonToXY(&mapCopy, n->coordinates).second - 2 + y < mapCopy.height()) {
+                        mapCopy.getPixel(latLonToXY(&mapCopy, n->coordinates).first - 2 + x, latLonToXY(&mapCopy, n->coordinates).second - 2 + y) = color;
+                    }
+            }
+        }
+    }
+    mapCopy.writeToFile("../missing_migrants_path.png");
+    return mapCopy;
 }
