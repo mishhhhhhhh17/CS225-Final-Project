@@ -4,5 +4,5 @@ The output of our BFS algorithm is a vector of all the incident Nodes for which 
 
 The output of our Prim's algorithm is the minimum spanning tree of the graph. We test that the algorithm works in tests-part1.cpp by creating a graph from the test dataset bfs_test_data.csv, and accessing each node to make sure that it was initialized correctly.
 
-To check that we were accurately plotting points on the map, we inputted 
-the region list in the original dataset against used online resources to check that the points we plotted on the map were being plotted in the correct location. 
+TODO: edit with correct information
+To check that we were accurately plotting points on the map, we inputted the geographical coordinates into a <website> to check where they should appear on a map, and verified that those points were being plotted in the correct place in our program.
