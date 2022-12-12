@@ -5,8 +5,8 @@ int main(int argc, char** argv) {
     // argv[2] = filename of map (string)
     // argv[3] = target for findByLoss (double [0,1])
     // argv[4] = range for findByLoss (double [0,1])
-    Graph g(argv[1]);
-    Graph span = g.prim();
+    Graph* g = new Graph(argv[1]);
+    Graph span = g->prim();
     PNG blank_map;
     blank_map.readFromFile(argv[2]);
     span.plotPointsOnMap(blank_map);

@@ -28,7 +28,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/main",
-            "args": [],
+            "args": ["./data/cleaned_dataset.csv", "./data/Equirectangular_projection_world_map.png", "0.1", "0.1"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
