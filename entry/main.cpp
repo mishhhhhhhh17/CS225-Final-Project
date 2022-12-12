@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
     PNG blank_map;
     blank_map.readFromFile(argv[2]);
     span.plotPointsOnMap(blank_map);
+    span.pathsOnMap(blank_map);
     vector<Graph::Node*> target_nodes = span.findByLoss(stod(argv[3]), stod(argv[4]));
     cout << "Nodes within target and range:" << endl;
     for (auto node : target_nodes) {
