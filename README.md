@@ -1,7 +1,7 @@
 # CS225-Final-Project
 Fall 2022 CS 225 UIUC
 Introduction:
-Our project uses a dataset that records cases of missing migrants from 2014 to 2022, including the number of males, females, and children on the trip, the geographical coordinates of the location at which they went missing, the total number of missing or dead (which we refer to as the total number of losses), among other variables. We cleaned the dataset to include only cases from 2022, and limited to the variables to those listed above, combining the number of females, males, and children into 1 variable, totalMigrants. Our graph connects incidents within 750km of each other, and keeps track of the incident with the lowest percentage of lost migrants. The goal of our project was to create a search tool that plots incidents within a given range of a target loss on a map.
+Our project uses a dataset that records cases of missing migrants from 2014 to 2022, including the number of males, females, and children on the trip, the geographical coordinates of the location at which they went missing, the total number of missing or dead (which we refer to as the total number of losses), among other variables. We cleaned the dataset to include only cases from 2022, and limited to the variables to those listed above, combining the number of dead and missing as well as number of survivors into 1 variable, totalMigrants. Our graph connects incidents within 750km of each other, and keeps track of the incident with the lowest percentage of lost migrants. The goal of our project was to create a search tool that plots incidents within a given range of a target loss on a map.
 
 Github Organization:
 We referred to course MPs as a template for organizing our github repository.
