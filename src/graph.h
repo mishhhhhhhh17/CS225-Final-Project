@@ -49,7 +49,7 @@ class Graph {
         int totalLoss;
         int totalMigrants;
         // latitude, longitude
-        pair<double, double> coordinates; 
+        pair<double, double> coordinates;
     };
 
     /**

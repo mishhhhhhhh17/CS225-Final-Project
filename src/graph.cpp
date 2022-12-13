@@ -166,11 +166,12 @@ Graph Graph::prim() {
             }
         }
     }
-
+    spanning_tree.lowest_risk_ = *visited.begin();
     for (auto node : visited) { // populating spanning_tree
         if (predecessor[node] != NULL) spanning_tree.addEdge(node, predecessor[node], calculateDistance(node, predecessor[node]));
+        spanning_tree.vertices_.insert(node);
+        if (calculateRisk(node) < calculateRisk(spanning_tree.lowest_risk_)) spanning_tree.lowest_risk_ = node;
     }
-    
     return spanning_tree;
 }
 
@@ -203,8 +204,11 @@ void Graph::_copy(const Graph& other){
 graph destructor helper function
 */
 void Graph::_destroy(){
-    for (auto v: vertices_) {
-        delete v;
+    while (!vertices_.empty()) {
+        set<Node*>::iterator it = vertices_.begin();
+        delete *it;
+        vertices_.erase(it);
+       
     }
 }
 
