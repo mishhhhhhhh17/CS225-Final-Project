@@ -166,10 +166,16 @@ Graph Graph::prim() {
             }
         }
     }
+
     spanning_tree.lowest_risk_ = *visited.begin();
     for (auto node : visited) { // populating spanning_tree
         if (predecessor[node] != NULL) spanning_tree.addEdge(node, predecessor[node], calculateDistance(node, predecessor[node]));
-        spanning_tree.vertices_.insert(node);
+        Node* new_node = new Node();
+        new_node->incidentID = node->incidentID;
+        new_node->coordinates = node->coordinates;
+        new_node->totalLoss = node->totalLoss;
+        new_node->totalMigrants = node->totalMigrants;
+        spanning_tree.vertices_.insert(new_node);
         if (calculateRisk(node) < calculateRisk(spanning_tree.lowest_risk_)) spanning_tree.lowest_risk_ = node;
     }
     return spanning_tree;
@@ -204,11 +210,8 @@ void Graph::_copy(const Graph& other){
 graph destructor helper function
 */
 void Graph::_destroy(){
-    while (!vertices_.empty()) {
-        set<Node*>::iterator it = vertices_.begin();
-        delete *it;
-        vertices_.erase(it);
-       
+    for (auto v: vertices_) {
+        delete v;
     }
 }
 
