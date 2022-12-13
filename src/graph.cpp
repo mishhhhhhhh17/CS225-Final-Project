@@ -210,9 +210,14 @@ void Graph::_copy(const Graph& other){
 graph destructor helper function
 */
 void Graph::_destroy(){
-    for (auto v: vertices_) {
-        delete v;
+    while (!vertices_.empty()) {
+        set<Node*>::iterator it = vertices_.begin();
+        delete *it;
+        vertices_.erase(it);
+       
     }
+    delete lowest_risk_;
+    lowest_risk_ = nullptr;
 }
 
 // testing functions
