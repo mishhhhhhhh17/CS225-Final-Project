@@ -176,7 +176,7 @@ Graph Graph::prim() {
         new_node->totalLoss = node->totalLoss;
         new_node->totalMigrants = node->totalMigrants;
         spanning_tree.vertices_.insert(new_node);
-        if (calculateRisk(node) < calculateRisk(spanning_tree.lowest_risk_)) spanning_tree.lowest_risk_ = node;
+        if (calculateRisk(node) < calculateRisk(spanning_tree.lowest_risk_)) spanning_tree.lowest_risk_ = new_node;
     }
     return spanning_tree;
 }
@@ -216,8 +216,6 @@ void Graph::_destroy(){
         vertices_.erase(it);
        
     }
-    delete lowest_risk_;
-    lowest_risk_ = nullptr;
 }
 
 // testing functions
