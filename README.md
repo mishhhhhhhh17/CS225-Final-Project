@@ -15,16 +15,16 @@ The makefile is inside the CS225-Final-Project folder, and was written based on 
 
 Running Instructions:
 First, create a makefile with the following commands in the terminal
-
+```
 mkdir build
 cd build
 cmake ..
 make
-
+```
 Then, the user must pass in four arguments through the command line following main. The first argument is the path of the cleaned dataset, the second argument is the path of the blank map PNG, and the third and fourth arguments are the target and range respectively for findByLoss.
-
+```
 ./main [dataset path] [map PNG path] [findByLoss target] [findByLoss range]
-
+```
 The code initializes the graph from the dataset included in the "data" folder. Our constructor creates the graph. The user can plot the results of their queries by calling plotPointsOnMap and pathsOnMap which are outputted in the "results" folder.
 The second main component of our program is a BFS search function findByLoss which traverses the graph and returns a vector of all the incidents which reported a total loss within a given range of a target. The results are outputted in the terminal.
 
