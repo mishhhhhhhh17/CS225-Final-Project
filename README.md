@@ -6,11 +6,17 @@ Our project uses a dataset that records cases of missing migrants from 2014 to 2
 Github Organization:
 We referred to course MPs as a template for organizing our github repository.
 All csv files including the missing migrants data file which we downloaded from https://www.kaggle.com/code/methoomirza/eda-missing-migrants-2014-2022/data?select=MissingMigrants-Global-2022.csv and cleaned to fit the goals of our project, and csv files we created for testing our code are located in the "data" folder.
+
 The "entry" folder contains the main file from which the user can run functions.
+
 The "lib" folder includes the HSLAPixel and PNG classes which we use to plot points on PNG images of a map.
+
 The "results" folder includes the PNG of the dataset's points plotted out on an equirectangular projection map, a PNG of the paths of the minimum spanning tree given that points were within 750 km of each other, and a GIF of the points being plotted out based on chronological order.
+
 The "src" folder contains the graph .h and .cpp files which contain the definition and implementation of our graph data structure and graph algorithms; the utilities .h and .cpp files which contain functions to clean the data set and helper functions for reading the csv into the graph data structure; and the Animation .h and .cpp files which we appropriated from MP Traversals to animate plotting points on the map.
+
 The "tests" folder contains tests_part1 which tests that we are parsing the CSV correctly and tests our implementation of Prim's algorithm; tests_part2 which tests that the constructor accurately initializes the graph; and tests_part3 which tests out BFS algorithm and that we plot points onto the map PNG accurately.
+
 The makefile is inside the CS225-Final-Project folder, and was written based on the makefiles provided in previous MPs.
 
 Running Instructions:
