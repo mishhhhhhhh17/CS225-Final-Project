@@ -320,8 +320,8 @@ PNG Graph::plotPointsOnMap(const PNG map) {
         }
     }
     animation.addFrame(mapCopy);
-    mapCopy.writeToFile("../missing_migrants_map.png");
-    animation.write("../missing_migrants_map.gif");
+    mapCopy.writeToFile("../results/missing_migrants_map.png");
+    animation.write("../results/missing_migrants_map.gif");
     return mapCopy;
 }
 
@@ -386,6 +386,6 @@ PNG Graph::pathsOnMap(const PNG map) {
             }
         }
     }
-    mapCopy.writeToFile("../missing_migrants_path.png");
+    mapCopy.writeToFile("../results/missing_migrants_path.png");
     return mapCopy;
 }
